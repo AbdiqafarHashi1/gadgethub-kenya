@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GadgetHub Kenya | Premium Electronics Storefront</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { colors: { ghBg:'#05070c', ghPanel:'#0d121d', ghSoft:'#161d2b', ghGold:'#f6c400' }, boxShadow:{ glow:'0 0 0 1px rgba(246,196,0,.22),0 20px 45px rgba(0,0,0,.55)' }}}};
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: radial-gradient(circle at 25% -10%, #172c55 0%, #05070c 45%); }
+      .glass { background: linear-gradient(155deg, rgba(22, 29, 43, 0.92), rgba(10, 13, 20, 0.95)); backdrop-filter: blur(12px); }
+      .hero-overlay { background: linear-gradient(90deg, rgba(5,7,12,0.95) 4%, rgba(5,7,12,0.72) 40%, rgba(5,7,12,0.15) 78%); }
+      .product-card{transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;} .product-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 24px 45px rgba(0,0,0,.55); border-color: rgba(246,196,0,.35);} .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(246,196,0,.38),transparent);} .btn-gold{background:linear-gradient(135deg,#f6c400,#ffe27a);} .btn-gold:hover{filter:brightness(1.05);} .img-frame{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 18px 36px rgba(0,0,0,.45);} 
+      .promo-strip { background: linear-gradient(90deg, #f6c400, #f4db62); color: #080a10; }
+      .img-dark { filter: saturate(1.05) contrast(1.03); }
+    </style>
+  </head>
+  <body class="text-slate-100">
+    <div class="promo-strip text-xs md:text-sm py-2 text-center font-semibold">🔥 Flash Deals Nairobi: Free same-day delivery on orders above KSh 15,000 · Pay via M-Pesa Till 807245</div>
+    <div class="max-w-7xl mx-auto px-3 md:px-6 pb-28 md:pb-8">
+      <header class="sticky top-0 z-50 bg-[#05070cf0] backdrop-blur-md border-b border-slate-800">
+        <div class="hidden md:flex items-center gap-4 py-3">
+          <div class="text-3xl font-black">Gadget<span class="text-ghGold">Hub</span><span class="text-xs ml-2 tracking-[0.22em]">KENYA</span></div>
+          <input class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2" placeholder="Search iPhone, AirPods, accessories..."/>
+          <nav class="flex text-sm gap-3"><a class="text-ghGold" href="#">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#flash">Deals</a><a href="#">About Us</a><a href="#">Contact Us</a><a href="#">Track Order</a><a href="#">Wishlist</a></nav>
+          <button class="relative border border-slate-700 px-3 py-2 rounded-lg">Cart <span class="cart-count absolute -top-2 -right-2 bg-ghGold text-black text-xs rounded-full px-1.5 font-bold">2</span></button>
+          <a target="_blank" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20need%20help%20with%20my%20order." class="text-green-400">0700 123 456</a>
+        </div>
+        <div class="md:hidden py-3 flex items-center justify-between">
+          <button id="menuBtn" class="border border-slate-700 rounded-lg p-2">☰</button>
+          <div class="font-black text-xl">Gadget<span class="text-ghGold">Hub</span></div>
+          <div class="flex gap-2"><button class="border border-slate-700 rounded-lg p-2">⌕</button><button class="relative border border-slate-700 rounded-lg p-2">🛒<span class="cart-count absolute -top-2 -right-2 bg-ghGold text-black text-xs rounded-full px-1">2</span></button></div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden pb-3 grid grid-cols-2 gap-2 text-sm"><a class="glass rounded-lg p-2" href="#shop">Shop</a><a class="glass rounded-lg p-2" href="#categories">Categories</a><a class="glass rounded-lg p-2" href="#flash">Deals</a><a class="glass rounded-lg p-2" href="#">Track Order</a></div>
+      </header>
+
+      <section class="mt-4 md:mt-5 rounded-3xl overflow-hidden border border-slate-800 shadow-glow relative" id="hero">
+        <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1800&q=80" class="absolute inset-0 w-full h-full object-cover img-dark" alt="Premium tech setup"/>
+        <div class="hero-overlay absolute inset-0"></div>
+        <div class="relative grid md:grid-cols-2 gap-6 p-6 md:p-10 items-center min-h-[520px] md:min-h-[590px]">
+          <div>
+            <p class="inline-flex items-center gap-2 text-xs border border-ghGold/40 text-ghGold rounded-full px-3 py-1 mb-4">⚡ TECH THAT CONNECTS NAIROBI</p>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight">Latest Gadgets.<br/>Best Prices.<br/><span class="text-ghGold">Fast Delivery.</span></h1>
+            <p class="text-slate-300 mt-4 max-w-md">Premium electronics, accessories, and smart devices delivered across Nairobi with same-day dispatch, verified authenticity, and WhatsApp-first support.</p>
+            <div class="mt-6 flex gap-3"><a href="#shop" class="btn-gold text-black px-5 py-3 rounded-xl font-semibold shadow-lg shadow-yellow-500/20">Shop Now</a><a href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20want%20to%20order%20today." target="_blank" class="border border-slate-600 rounded-xl px-5 py-3">Chat on WhatsApp</a></div>
+          </div>
+          <div class="grid grid-cols-3 gap-3 self-end">
+            <img class="rounded-2xl h-40 w-full object-cover" src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80" alt="iPhone closeup"/>
+            <img class="rounded-2xl h-40 w-full object-cover" src="https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=600&q=80" alt="Headphones"/>
+            <img class="rounded-2xl h-40 w-full object-cover" src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=600&q=80" alt="Smart watch"/>
+          </div>
+        </div>
+      </section>
+
+      <div class='section-divider mt-5 mb-4'></div><section class="mt-0 grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3 text-sm">
+        <div class="glass p-3 rounded-xl">🚚 Same-Day Delivery Within Nairobi</div><div class="glass p-3 rounded-xl">🛡️ 100% Original Products</div><div class="glass p-3 rounded-xl">💳 M-Pesa, Card, PayPal</div><div class="glass p-3 rounded-xl">↩️ 7-Day Easy Returns</div><div class="glass p-3 rounded-xl col-span-2 md:col-span-1">✅ Official Warranty Support</div>
+      </section>
+
+      <section id="flash" class="mt-6 glass rounded-2xl p-4 border border-slate-800">
+        <div class="flex items-center justify-between"><h2 class="font-bold text-xl">Flash Deals · Ends in <span id="countdown" class="text-ghGold">05:12:44</span></h2><span class="text-xs text-slate-400">Updated every 15 mins</span></div>
+        <div class="grid md:grid-cols-3 gap-3 mt-3">
+          <div class="rounded-xl bg-slate-900/70 p-3 border border-slate-700">🎧 Sony WH-1000XM5 <span class="text-ghGold font-bold">-8%</span></div>
+          <div class="rounded-xl bg-slate-900/70 p-3 border border-slate-700">⌚ Apple Watch Series 9 <span class="text-ghGold font-bold">-5%</span></div>
+          <div class="rounded-xl bg-slate-900/70 p-3 border border-slate-700">🔋 Anker PowerCore <span class="text-ghGold font-bold">Buy 2 Get Cable</span></div>
+        </div>
+      </section>
+
+      <section id="categories" class="mt-8"><div class="flex justify-between"><h2 class="text-2xl font-bold">Shop by Category</h2><a href="#" class="text-ghGold text-sm">View all</a></div><div id="catGrid" class="grid grid-cols-2 md:grid-cols-6 gap-3 mt-3"></div></section>
+
+      <section class="mt-8"><h2 class="text-2xl font-bold">Featured Brands</h2><p class="text-slate-400 text-sm mt-1">Official partner supply lines with warranty-backed inventory.</p><div class="mt-3 grid grid-cols-3 md:grid-cols-6 gap-3 text-center text-sm"><div class="glass rounded-xl p-3">Apple</div><div class="glass rounded-xl p-3">Samsung</div><div class="glass rounded-xl p-3">Sony</div><div class="glass rounded-xl p-3">Anker</div><div class="glass rounded-xl p-3">JBL</div><div class="glass rounded-xl p-3">Tecno</div></div></section>
+
+      <section id="shop" class="mt-8"><div class="flex justify-between items-end"><h2 class="text-2xl font-bold">Best Sellers</h2><a class="text-ghGold text-sm" href="#">View all products</a></div><div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 mt-3"></div></section>
+
+      <section class="mt-8 grid md:grid-cols-2 gap-3">
+        <div class="glass border border-slate-800 rounded-2xl p-5"><h3 class="text-xl font-bold mb-2">Trending Gadgets This Week</h3><ul class="space-y-2 text-sm"><li>• MagSafe Power Bank + iPhone bundle deals</li><li>• Noise-cancelling headphones for hybrid work</li><li>• LTE smart watches with health tracking</li><li>• Creator accessories: mic, ring-light, tripod kits</li></ul></div>
+        <div class="glass border border-slate-800 rounded-2xl p-5"><h3 class="text-xl font-bold mb-2">Why Nairobi Trusts GadgetHub</h3><ul class="space-y-2 text-sm"><li>• Verified IMEI/serial on premium phones</li><li>• On-demand WhatsApp video product demos</li><li>• Rider drop-off windows across Nairobi CBD</li><li>• M-Pesa receipts + instant order tracking</li></ul></div>
+      </section>
+
+      <section id="deals" class="mt-8 glass rounded-3xl border border-slate-800 p-5">
+        <div class="grid md:grid-cols-3 gap-4 items-center">
+          <img src="https://images.unsplash.com/photo-1695048133142-1a20484db93b?auto=format&fit=crop&w=800&q=80" class="rounded-2xl w-full h-full object-cover" alt="iPhone 15 Pro Max"/>
+          <div><p class="text-xs text-ghGold mb-2">FEATURED PRODUCT</p><h3 class="text-3xl font-bold">iPhone 15 Pro Max 256GB</h3><p class="text-2xl text-ghGold font-bold mt-2">KSh 164,999</p><p class="mt-1 text-sm">★★★★★ (235 verified reviews)</p><ul class="list-disc ml-5 mt-3 text-sm text-slate-300"><li>Titanium finish with advanced camera system</li><li>A17 Pro chip for gaming and creator workflows</li><li>1-year official warranty + Nairobi same-day delivery</li></ul><div class="flex gap-2 mt-4"><button class="add-cart bg-ghGold text-black px-4 py-2 rounded-lg font-semibold">Add to Cart</button><button class="border border-slate-600 px-4 py-2 rounded-lg">Learn More</button></div></div>
+          <div class="space-y-2 text-sm"><div class="glass rounded-xl p-3">🛡 1 Year Official Warranty</div><div class="glass rounded-xl p-3">🚚 Free Nairobi Delivery</div><div class="glass rounded-xl p-3">🔒 Secure Checkout with M-Pesa</div></div>
+        </div>
+      </section>
+
+      <section class="mt-8"><h2 class="text-2xl font-bold">Recently Viewed</h2><p class="text-slate-400 text-sm">Continue where you left off — synced from your browsing session.</p><div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3" id="recentGrid"></div></section>
+      <section class="mt-8"><h2 class="text-2xl font-bold">Customer Testimonials</h2><div class="grid md:grid-cols-3 gap-3 mt-3"><div class="glass rounded-xl p-4">“Ordered before lunch, got my AirPods by 5pm in Kilimani. Legit store.”<p class="text-ghGold mt-2 text-sm">— Sheila N., Nairobi</p></div><div class="glass rounded-xl p-4">“They confirmed serial numbers on WhatsApp before I paid. 10/10.”<p class="text-ghGold mt-2 text-sm">— Brian K., Westlands</p></div><div class="glass rounded-xl p-4">“Clean packaging, fast rider delivery, and M-Pesa receipt instantly.”<p class="text-ghGold mt-2 text-sm">— Amina O., South B</p></div></div></section>
+
+      <section class="mt-8 glass rounded-2xl p-5 border border-ghGold/30"><div class="flex flex-col md:flex-row md:items-center justify-between gap-3"><div><h3 class="text-2xl font-bold">Unlock VIP Gadget Drops</h3><p class="text-slate-300">Get early access to limited stock, Nairobi flash deals, and exclusive bundle pricing.</p></div><div class="flex gap-2"><input class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2" placeholder="Enter your email"/><button class="bg-ghGold text-black px-4 rounded-lg font-semibold">Join Newsletter</button></div></div></section>
+
+      <footer class="mt-10 border-t border-slate-800 pt-7 text-sm text-slate-300"><div class="grid md:grid-cols-5 gap-4"><div><div class="text-3xl font-black">Gadget<span class="text-ghGold">Hub</span></div><p>Premium gadgets, best prices, fast Nairobi delivery.</p></div><div><h4 class="text-white font-semibold">Shop</h4><p>Smartphones<br/>Audio<br/>Smart Watches<br/>Accessories<br/>Power Banks<br/>Gaming</p></div><div><h4 class="text-white font-semibold">Customer Care</h4><p>Track Order<br/>Returns & Refunds<br/>Shipping Info<br/>Warranty<br/>FAQs</p></div><div><h4 class="text-white font-semibold">Company</h4><p>About Us<br/>Our Stores<br/>Careers<br/>Blog<br/>Terms & Conditions</p></div><div><h4 class="text-white font-semibold">Contact</h4><p>0700 123 456<br/>hello@gadgethub.co.ke<br/>Nairobi, Kenya</p><p class="mt-2">M-Pesa · Visa · Mastercard · PayPal</p></div></div></footer>
+    </div>
+
+    <a href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20want%20to%20place%20an%20order." target="_blank" class="fixed right-4 bottom-24 md:bottom-6 w-14 h-14 rounded-full bg-green-500 grid place-items-center text-2xl shadow-glow z-40">💬</a>
+    <nav class="md:hidden fixed bottom-0 inset-x-0 bg-[#090d17f2] border-t border-slate-800 pb-[env(safe-area-inset-bottom)] z-50"><div class="grid grid-cols-5 text-xs text-center py-2"><a class="text-ghGold" href="#">Home</a><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#" class="relative">Cart<span class="cart-count absolute -top-2 right-7 bg-ghGold text-black rounded-full px-1">2</span></a><a href="#">Account</a></div></nav>
+
+    <script>
+      const categories=[['Smartphones','45+ Products','📱','https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80'],['Audio','32+ Products','🎧','https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=500&q=80'],['Smart Watches','28+ Products','⌚','https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=500&q=80'],['Accessories','60+ Products','🔌','https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=80'],['Power Banks','25+ Products','🔋','https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80'],['Gaming','18+ Products','🎮','https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=500&q=80']];
+      const products=[
+        {name:'Apple AirPods Pro 2',price:'KSh 24,999',reviews:128,img:'https://images.unsplash.com/photo-1606741965326-cb990ae01bb2?auto=format&fit=crop&w=700&q=80',badge:'Best Seller',stock:'In stock'},
+        {name:'iPhone 15 Pro Max 256GB',price:'KSh 164,999',reviews:235,img:'https://images.unsplash.com/photo-1695048133142-1a20484db93b?auto=format&fit=crop&w=700&q=80',badge:'Flagship',stock:'Low stock'},
+        {name:'Samsung Galaxy S24 Ultra',price:'KSh 159,999',reviews:186,img:'https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?auto=format&fit=crop&w=700&q=80',badge:'Hot Deal',stock:'In stock'},
+        {name:'Apple Watch Series 9',price:'KSh 53,999',reviews:94,img:'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=80',badge:'Top Rated',stock:'In stock'},
+        {name:'Sony WH-1000XM5',price:'KSh 38,999',reviews:112,img:'https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=700&q=80',badge:'Limited',stock:'Fast moving'},
+        {name:'Anker PowerCore 20,000mAh',price:'KSh 4,499',reviews:276,img:'https://images.unsplash.com/photo-1609592165404-6d2d0f1803f2?auto=format&fit=crop&w=700&q=80',badge:'Value Pick',stock:'In stock'}
+      ];
+      catGrid.innerHTML=categories.map(c=>`<article class='glass rounded-2xl overflow-hidden border border-slate-800 hover:shadow-glow hover:-translate-y-1 transition duration-300'><img src='${c[3]}' class='w-full h-28 object-cover img-frame'><div class='p-3'><p class='font-semibold'>${c[2]} ${c[0]}</p><p class='text-xs text-slate-400'>${c[1]}</p></div></article>`).join('');
+      productGrid.innerHTML=products.map(p=>`<article class='product-card transition glass rounded-2xl border border-slate-800 overflow-hidden'><div class='relative'><img src='${p.img}' class='w-full h-40 object-cover img-frame'><span class='absolute top-2 left-2 bg-ghGold text-black text-xs px-2 py-1 rounded-full font-semibold'>${p.badge}</span><button class='absolute top-2 right-2 bg-black/55 rounded-full p-1.5'>♡</button></div><div class='p-3'><h3 class='font-semibold text-sm min-h-[38px]'>${p.name}</h3><p class='text-ghGold font-bold mt-1'>${p.price}</p><p class='text-xs mt-1'>★★★★★ <span class='text-slate-400'>(${p.reviews})</span></p><p class='text-xs text-emerald-400 mt-1'>${p.stock} · Nairobi delivery today</p><p class='text-[11px] text-slate-400 mt-1'>Pay with M-Pesa on checkout or delivery confirmation</p><button class='add-cart w-full mt-3 border border-ghGold text-ghGold rounded-lg py-2 hover:bg-ghGold hover:text-black font-medium'>Quick Add</button></div></article>`).join('');
+      recentGrid.innerHTML=products.slice(0,4).map(p=>`<article class='glass rounded-xl p-3 border border-slate-800'><div class='flex gap-2 items-center'><img src='${p.img}' class='w-16 h-16 rounded-lg object-cover'><div><p class='text-sm font-semibold'>${p.name}</p><p class='text-xs text-ghGold'>${p.price}</p></div></div></article>`).join('');
+      let cart=2; const countEls=document.querySelectorAll('.cart-count'); const draw=()=>countEls.forEach(e=>e.textContent=cart);
+      document.addEventListener('click',e=>{ if(e.target.classList.contains('add-cart')){cart++; draw(); e.target.textContent='Added ✓'; setTimeout(()=>e.target.textContent='Quick Add',700);} });
+      menuBtn.onclick=()=>mobileMenu.classList.toggle('hidden'); draw();
+      let seconds=18764; setInterval(()=>{seconds=(seconds-1+86400)%86400; const h=String(Math.floor(seconds/3600)).padStart(2,'0'); const m=String(Math.floor(seconds%3600/60)).padStart(2,'0'); const s=String(seconds%60).padStart(2,'0'); countdown.textContent=`${h}:${m}:${s}`},1000);
+    </script>
+  </body>
+</html>
