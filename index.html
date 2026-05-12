@@ -155,7 +155,36 @@
     .delivery { color:#9ed2ff; font-size:.82rem; }
     .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.82rem; }
     .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:.25rem; }
-    .actions button { border:1px solid #374055; background:#1a2334; color:#8190ab; border-radius:.5rem; padding:.45rem; font-size:.72rem; cursor:not-allowed; }
+    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.5rem; padding:.45rem; font-size:.72rem; cursor:pointer; }
+    .actions button:hover { border-color: var(--accent); }
+    .cart-count {
+      display:inline-grid; place-items:center; min-width:20px; height:20px; border-radius:99px; background:var(--accent); color:#121212; font-size:.72rem; font-weight:800; padding:0 .35rem;
+    }
+    .overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:200; display:none; }
+    .overlay.open { display:block; }
+    .modal, .cart-drawer {
+      position:fixed; z-index:220; background:#0e1522; border:1px solid var(--line); color:var(--text); display:none;
+    }
+    .modal.open, .cart-drawer.open { display:block; }
+    .modal { top:50%; left:50%; transform:translate(-50%,-50%); width:min(760px,94vw); max-height:90vh; border-radius:1rem; overflow:auto; }
+    .modal-head, .drawer-head { display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid var(--line);}
+    .close-btn { background:#1a2334; color:var(--text); border:1px solid #354055; border-radius:.55rem; padding:.35rem .55rem; cursor:pointer; }
+    .modal-body { padding:1rem; display:grid; gap:1rem; grid-template-columns:1fr 1.2fr; }
+    .modal-body img { width:100%; border-radius:.8rem; border:1px solid var(--line); }
+    .modal-actions { display:flex; gap:.6rem; flex-wrap:wrap; }
+    .modal-actions button, .modal-actions a, .checkout-btn { border:1px solid #354055; background:#1a2334; color:var(--text); border-radius:.55rem; padding:.55rem .8rem; font-size:.9rem; cursor:pointer; }
+    .checkout-btn { background:var(--ok); color:#032211; font-weight:700; width:100%; margin-top:.7rem; }
+    .cart-drawer { top:0; right:0; height:100vh; width:min(420px,96vw); border-radius:1rem 0 0 1rem; transform:translateX(100%); transition:transform .25s ease; }
+    .cart-drawer.open { transform:translateX(0); }
+    .drawer-body { padding:1rem; height:calc(100vh - 76px); overflow:auto; display:flex; flex-direction:column; }
+    .cart-item { display:grid; grid-template-columns:60px 1fr auto; gap:.6rem; border-bottom:1px solid var(--line); padding:.65rem 0; }
+    .cart-item img { width:60px; height:60px; object-fit:cover; border-radius:.5rem; }
+    .qty-controls { display:flex; align-items:center; gap:.35rem; margin-top:.35rem; }
+    .qty-controls button, .remove-btn { border:1px solid #354055; background:#1a2334; color:var(--text); border-radius:.4rem; cursor:pointer; }
+    .qty-controls button { width:24px; height:24px; }
+    .remove-btn { padding:.2rem .45rem; font-size:.74rem; }
+    .hidden { display:none !important; }
+    .no-scroll { overflow:hidden; }
     .empty-state { border:1px dashed #47536d; background:rgba(14,20,33,.7); border-radius:1rem; padding:1rem; text-align:center; color:var(--muted);}
 
     .mobile-nav {
@@ -214,6 +243,8 @@
       .flash { font-size: .78rem; }
       .badge { font-size: .88rem; }
       .wa-float { bottom: 5.3rem; }
+      .modal-body { grid-template-columns:1fr; }
+      .cart-drawer { width:100vw; border-radius:0; }
     }
   </style>
 </head>
@@ -231,6 +262,7 @@
         <a href="#newsletter">Newsletter</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰ Menu</button>
+      <button class="menu-btn" id="cartOpenBtn" aria-label="Open cart">🛒 <span id="cartCount" class="cart-count">0</span></button>
     </div>
     <div class="container mobile-menu" id="mobileMenu">
       <a href="#categories">Categories</a>
@@ -287,10 +319,26 @@
       <li><a class="active" href="#hero">Home</a></li>
       <li><a href="#categories">Categories</a></li>
       <li><a href="#products">Products</a></li>
-      <li><a href="#featured">Featured</a></li>
+      <li><a href="#featured" data-cart-open>Cart <span id="mobileCartCount" class="cart-count">0</span></a></li>
       <li><a href="#newsletter">Deals</a></li>
     </ul>
   </nav>
+  <div id="overlay" class="overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Cart drawer">
+    <div class="drawer-head"><strong>Your Cart</strong><button class="close-btn" data-close-cart>✕</button></div>
+    <div class="drawer-body">
+      <div id="cartItems"></div>
+      <div id="cartEmpty" class="empty-state">Your cart is empty.</div>
+      <div id="cartSummary">
+        <strong>Subtotal: <span id="cartSubtotal">KSh 0</span></strong>
+        <a id="checkoutBtn" class="checkout-btn" target="_blank" rel="noopener">Checkout on WhatsApp</a>
+      </div>
+    </div>
+  </aside>
+  <section id="productModal" class="modal" aria-label="Product details modal">
+    <div class="modal-head"><strong>Product Details</strong><button class="close-btn" data-close-modal>✕</button></div>
+    <div id="modalContent" class="modal-body"></div>
+  </section>
 
   <script>
     const menuBtn = document.getElementById('menuBtn');
@@ -300,6 +348,17 @@
     const searchInput = document.getElementById('searchInput');
     const resultsSummary = document.getElementById('resultsSummary');
     const categorySummary = document.getElementById('categorySummary');
+    const overlay = document.getElementById('overlay');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartEmpty = document.getElementById('cartEmpty');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const cartCount = document.getElementById('cartCount');
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    const productModal = document.getElementById('productModal');
+    const modalContent = document.getElementById('modalContent');
+    const cartOpenBtn = document.getElementById('cartOpenBtn');
     const fallbackThumbs = [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
@@ -334,6 +393,7 @@
     categories.filter(c => c.name !== 'All Products').forEach((c) => { for (let i = 0; i < 4; i++) products.push(makeProduct(c.name, i)); });
     products[0].name = 'Galaxy S24 Ultra'; products[1].name = 'iPhone 15 Pro Max'; products[2].name = 'Xperia 1 VI'; products[3].name = 'Redmi Note 13 Pro';
     let activeCategory = 'All Products';
+    let cart = JSON.parse(localStorage.getItem('gadgethub_cart') || '[]');
 
     const formatKES = (value) => `KSh ${value.toLocaleString('en-KE')}`;
     const countByCategory = (name) => name === 'All Products' ? products.length : products.filter((p) => p.category === name).length;
@@ -349,15 +409,54 @@
       const query = searchInput.value.trim().toLowerCase();
       const filtered = products.filter((p) => (activeCategory === 'All Products' || p.category === activeCategory) && `${p.name} ${p.brand} ${p.category} ${p.specs.join(' ')}`.toLowerCase().includes(query));
       resultsSummary.textContent = `${filtered.length} product${filtered.length===1?'':'s'} shown in ${activeCategory}`;
-      productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class="product-card">
+      productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class="product-card" data-product-id="${p.id}">
         <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
         <div class="product-body"><strong>${p.name}</strong><div class="meta">${p.brand} • ${p.category}</div>
         <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div>
         <div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
         <ul class="spec-list">${p.specs.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
-        <div class="actions"><button disabled>Add to Cart</button><button disabled>View Details</button><button disabled>WhatsApp</button></div></div></article>`).join('')
+        <div class="actions"><button data-action="add">Add to Cart</button><button data-action="details">View Details</button><button data-action="wa">WhatsApp</button></div></div></article>`).join('')
       : `<div class="empty-state"><strong>No products found</strong><p>Try another search term or switch category.</p></div>`;
     }
+    const persistCart = () => localStorage.setItem('gadgethub_cart', JSON.stringify(cart));
+    const updateCartCount = () => {
+      const count = cart.reduce((n, i) => n + i.qty, 0);
+      cartCount.textContent = String(count);
+      mobileCartCount.textContent = String(count);
+    };
+    const productWA = (p) => `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I’m interested in ${p.name} at ${formatKES(p.price)}. Please confirm availability.`)}`;
+    function addToCart(productId) {
+      const item = cart.find((i) => i.id === productId);
+      if (item) item.qty += 1;
+      else {
+        const p = products.find((x) => x.id === productId);
+        if (!p) return;
+        cart.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty: 1 });
+      }
+      persistCart(); updateCartCount(); renderCart();
+    }
+    function renderCart() {
+      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      cartItems.innerHTML = cart.map((i) => `<div class="cart-item" data-id="${i.id}">
+        <img src="${i.image}" alt="${i.name}"><div><strong>${i.name}</strong><div>${formatKES(i.price)}</div>
+        <div class="qty-controls"><button data-cart="minus">-</button><span>${i.qty}</span><button data-cart="plus">+</button><button class="remove-btn" data-cart="remove">Remove</button></div></div>
+        <strong>${formatKES(i.price*i.qty)}</strong></div>`).join('');
+      cartSubtotal.textContent = formatKES(subtotal);
+      const empty = cart.length === 0;
+      cartEmpty.classList.toggle('hidden', !empty);
+      document.getElementById('cartSummary').classList.toggle('hidden', empty);
+      checkoutBtn.href = `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I want to order:\n${cart.map(i=>`- ${i.name} x${i.qty} = ${formatKES(i.price*i.qty)}`).join('\n')}\n\nSubtotal: ${formatKES(subtotal)}\nPlease confirm availability and Nairobi delivery timing.`)}`;
+    }
+    function openModal(productId) {
+      const p = products.find((x) => x.id === productId); if (!p) return;
+      modalContent.innerHTML = `<img src="${p.image}" alt="${p.name}"><div><h3 style="margin:.1rem 0;">${p.name}</h3><div class="meta">${p.brand} • ${p.category}</div>
+      <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div><div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
+      <ul class="spec-list">${p.specs.map(s=>`<li>${s}</li>`).join('')}</ul><p class="meta">Warranty and delivery support available. Same-day dispatch options apply where available.</p>
+      <div class="modal-actions"><button data-modal-add="${p.id}">Add to Cart</button><a href="${productWA(p)}" target="_blank" rel="noopener">Chat on WhatsApp</a></div></div>`;
+      overlay.classList.add('open'); productModal.classList.add('open'); document.body.classList.add('no-scroll');
+    }
+    const closeLayers = () => { overlay.classList.remove('open'); productModal.classList.remove('open'); cartDrawer.classList.remove('open'); document.body.classList.remove('no-scroll'); };
+    const openCart = () => { overlay.classList.add('open'); cartDrawer.classList.add('open'); document.body.classList.add('no-scroll'); renderCart(); };
 
     menuBtn.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('open');
@@ -378,8 +477,36 @@
       renderProducts();
     });
     searchInput.addEventListener('input', renderProducts);
+    productGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-product-id]'); if (!card) return;
+      const id = card.dataset.productId;
+      const btn = e.target.closest('button'); if (!btn) return;
+      if (btn.dataset.action === 'add') {
+        addToCart(id); const original = btn.textContent; btn.textContent = 'Added ✓'; setTimeout(() => { btn.textContent = original; }, 900);
+      } else if (btn.dataset.action === 'details') openModal(id);
+      else if (btn.dataset.action === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
+    });
+    modalContent.addEventListener('click', (e) => {
+      const id = e.target.dataset.modalAdd; if (!id) return; addToCart(id);
+      e.target.textContent = 'Added ✓'; setTimeout(() => { e.target.textContent = 'Add to Cart'; }, 900);
+    });
+    cartItems.addEventListener('click', (e) => {
+      const row = e.target.closest('.cart-item'); if (!row) return; const item = cart.find(i=>i.id===row.dataset.id); if (!item) return;
+      if (e.target.dataset.cart === 'plus') item.qty += 1;
+      if (e.target.dataset.cart === 'minus') item.qty = Math.max(1, item.qty - 1);
+      if (e.target.dataset.cart === 'remove') cart = cart.filter(i=>i.id!==item.id);
+      persistCart(); updateCartCount(); renderCart();
+    });
+    cartOpenBtn.addEventListener('click', openCart);
+    document.querySelector('[data-cart-open]').addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    document.querySelector('[data-close-cart]').addEventListener('click', closeLayers);
+    document.querySelector('[data-close-modal]').addEventListener('click', closeLayers);
+    overlay.addEventListener('click', closeLayers);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLayers(); });
     renderCategories();
     renderProducts();
+    updateCartCount();
+    renderCart();
   </script>
 </body>
 </html>
