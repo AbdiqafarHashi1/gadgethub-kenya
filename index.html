@@ -131,7 +131,7 @@
     .placeholder p { margin: 0; color: var(--muted); font-size: .95rem; }
     .section-head { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom: .85rem; }
     .section-head p { margin:0; color:var(--muted); font-size:.9rem; }
-    .category-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap:.7rem; }
+    .category-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:.75rem; }
     .category-chip {
       border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:.95rem; padding:.7rem; color:var(--text);
       display:grid; grid-template-columns:56px 1fr; gap:.7rem; align-items:center; cursor:pointer;
@@ -143,20 +143,18 @@
     .search-wrap input {
       width:100%; border:1px solid var(--line); background:#0d1320; color:var(--text); border-radius:.8rem; padding:.8rem .95rem;
     }
-    .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:.75rem; align-items:stretch; }
+    .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.8rem; }
     .product-card { border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; }
     .product-card img { width:100%; aspect-ratio: 4/3; object-fit:cover; background:#0a0f19; }
-    .product-body { padding:.75rem; display:grid; gap:.4rem; flex:1; }
-    .product-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em;}
-    .spec-list li{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+    .product-body { padding:.8rem; display:grid; gap:.45rem; }
     .meta { color:var(--muted); font-size:.85rem; }
     .price { font-size:1.1rem; font-weight:800; color:var(--accent); }
     .rating { font-size:.85rem; color:#ffd44f; }
     .stock.in { color:#7ff4ad; font-weight:700; font-size:.82rem; }
     .stock.out { color:#ff9f9f; font-weight:700; font-size:.82rem; }
     .delivery { color:#9ed2ff; font-size:.82rem; }
-    .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.79rem; }
-    .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:auto; }
+    .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.82rem; }
+    .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:.25rem; }
     .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.5rem; padding:.45rem; font-size:.72rem; cursor:pointer; }
     .actions button:hover { border-color: var(--accent); }
     .cart-count {
@@ -172,7 +170,7 @@
     .modal-head, .drawer-head { display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid var(--line);}
     .close-btn { background:#1a2334; color:var(--text); border:1px solid #354055; border-radius:.55rem; padding:.35rem .55rem; cursor:pointer; }
     .modal-body { padding:1rem; display:grid; gap:1rem; grid-template-columns:1fr 1.2fr; }
-    .modal-body img { width:100%; border-radius:.8rem; border:1px solid var(--line); background:#0a0f19; aspect-ratio:4/3; object-fit:contain; }
+    .modal-body img { width:100%; border-radius:.8rem; border:1px solid var(--line); }
     .modal-actions { display:flex; gap:.6rem; flex-wrap:wrap; }
     .modal-actions button, .modal-actions a, .checkout-btn { border:1px solid #354055; background:#1a2334; color:var(--text); border-radius:.55rem; padding:.55rem .8rem; font-size:.9rem; cursor:pointer; }
     .checkout-btn { background:var(--ok); color:#032211; font-weight:700; width:100%; margin-top:.7rem; }
@@ -180,7 +178,7 @@
     .cart-drawer.open { transform:translateX(0); }
     .drawer-body { padding:1rem; height:calc(100vh - 76px); overflow:auto; display:flex; flex-direction:column; }
     .cart-item { display:grid; grid-template-columns:60px 1fr auto; gap:.6rem; border-bottom:1px solid var(--line); padding:.65rem 0; }
-    .cart-item img { width:60px; height:60px; object-fit:contain; border-radius:.5rem; background:#0a0f19; border:1px solid #263047; }
+    .cart-item img { width:60px; height:60px; object-fit:cover; border-radius:.5rem; }
     .qty-controls { display:flex; align-items:center; gap:.35rem; margin-top:.35rem; }
     .qty-controls button, .remove-btn { border:1px solid #354055; background:#1a2334; color:var(--text); border-radius:.4rem; cursor:pointer; }
     .qty-controls button { width:24px; height:24px; }
@@ -239,13 +237,6 @@
       .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 1.25rem; }
       .badges { grid-template-columns: 1fr 1fr; }
       .mobile-nav { display: block; }
-    }
-
-    @media (max-width: 760px) {
-      .category-grid { display:flex; overflow-x:auto; gap:.55rem; padding-bottom:.2rem; }
-      .category-chip { min-width:180px; }
-      .products-grid { grid-template-columns:1fr 1fr; }
-      .product-card img { aspect-ratio: 5/4; object-fit:contain; }
     }
 
     @media (max-width: 600px) {
@@ -368,60 +359,154 @@
     const productModal = document.getElementById('productModal');
     const modalContent = document.getElementById('modalContent');
     const cartOpenBtn = document.getElementById('cartOpenBtn');
-    const fallbackImage = (label, tone='#16233a') => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 480'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='${tone}'/><stop offset='1' stop-color='#0f1728'/></linearGradient></defs><rect fill='url(#g)' width='640' height='480'/><circle cx='320' cy='190' r='84' fill='rgba(255,255,255,.09)'/><rect x='144' y='308' rx='12' width='352' height='52' fill='rgba(245,194,0,.2)'/><text x='320' y='338' fill='#f5f7fb' font-size='27' text-anchor='middle' font-family='Segoe UI, Arial'>${label}</text></svg>`)}`;
-    const categoryVisuals = {
-      'All Products': 'images/categories/accessories.svg', 'Smartphones': 'images/categories/smartphones.svg','Laptops': fallbackImage('Laptops','#13243d'),'Tablets': fallbackImage('Tablets','#1d2042'),'Smart Watches':'images/categories/smartwatches.svg','Headphones & Earbuds':'images/categories/audio.svg','Speakers': fallbackImage('Speakers','#2a213f'),'Power Banks':'images/categories/power-banks.svg','Chargers & Cables': fallbackImage('Chargers','#25333f'),'Gaming Accessories':'images/categories/gaming.svg','Phone Accessories':'images/categories/accessories.svg','Smart Home Devices': fallbackImage('Smart Home','#12363a'),'Cameras & Creator Gear': fallbackImage('Creator Gear','#30223e')
-    };
-    const categories = Object.keys(categoryVisuals).map(name => ({name, image: categoryVisuals[name]}));
-    const data = {
-      'Smartphones':[['iPhone 15 Pro Max 256GB','Apple',189500,['A17 Pro chip','48MP camera','5G Dual SIM','USB-C'], 'images/products/iphone-15-pro-max.svg'],['Samsung Galaxy S24 Ultra','Samsung',176000,['200MP camera','S Pen support','12GB RAM','5000mAh battery'],'images/products/samsung-s24-ultra.svg'],['Tecno Camon 30 Pro','Tecno',49999,['50MP OIS camera','AMOLED 144Hz','8GB RAM','5000mAh battery'],fallbackImage('Camon 30 Pro')],['Redmi Note 13 Pro','Xiaomi',42999,['200MP main camera','67W fast charge','8GB RAM','120Hz AMOLED'],fallbackImage('Redmi Note 13 Pro')]],
-      'Laptops':[['MacBook Air M2','Apple',149999,['13.6" Retina display','8GB unified memory','256GB SSD','18-hour battery'],fallbackImage('MacBook Air M2','#20243f')],['HP EliteBook 840 G8','HP',118000,['14" FHD display','Core i7 11th Gen','16GB RAM','512GB SSD'],fallbackImage('HP EliteBook 840')],['Lenovo ThinkPad X1 Carbon','Lenovo',185000,['14" WUXGA display','Core i7 Evo','16GB RAM','MIL-STD durability'],fallbackImage('ThinkPad X1 Carbon')],['Dell XPS 13','Dell',171000,['13.4" InfinityEdge','Core Ultra 7','16GB RAM','512GB SSD'],fallbackImage('Dell XPS 13')]],
-      'Tablets':[['iPad Air 5th Gen','Apple',104999,['10.9" Liquid Retina','M1 chip','256GB storage','USB-C'],fallbackImage('iPad Air 5th Gen','#1a2d4f')],['Samsung Galaxy Tab S9','Samsung',123000,['11" Dynamic AMOLED','Snapdragon 8 Gen 2','IP68 water resistant','S Pen in box'],fallbackImage('Galaxy Tab S9')],['Lenovo Tab P12','Lenovo',52999,['12.7" 3K display','8GB RAM','10200mAh battery','Quad JBL speakers'],fallbackImage('Lenovo Tab P12')],['Redmi Pad SE','Xiaomi',29999,['11" FHD+ display','8000mAh battery','8GB RAM','Dolby Atmos'],fallbackImage('Redmi Pad SE')]],
-      'Smart Watches':[['Apple Watch Series 9','Apple',68999,['45mm GPS','S9 SiP','ECG app','Crash Detection'],'images/products/apple-watch.svg'],['Samsung Galaxy Watch 6','Samsung',48999,['44mm AMOLED','Body composition','Sleep coaching','Bluetooth calling'],fallbackImage('Galaxy Watch 6')],['Amazfit GTR 4','Amazfit',28999,['1.43" AMOLED','Dual-band GPS','150+ sports modes','14-day battery'],fallbackImage('Amazfit GTR 4')],['Huawei Watch GT 4','Huawei',31999,['1.43" AMOLED','TruSeen 5.5+','100+ workouts','2-week battery'],fallbackImage('Huawei Watch GT 4')]],
-      'Headphones & Earbuds':[['Apple AirPods Pro 2','Apple',39999,['Active Noise Cancellation','MagSafe USB-C case','Spatial Audio','Sweat resistant'],'images/products/airpods-pro.svg'],['Sony WH-1000XM5','Sony',53999,['Industry-leading ANC','30-hour battery','LDAC support','Multipoint pairing'],'images/products/sony-headphones.svg'],['JBL Tune 760NC','JBL',12999,['Adaptive noise cancelling','35-hour battery','Foldable design','Bluetooth 5.0'],fallbackImage('JBL Tune 760NC')],['Samsung Galaxy Buds FE','Samsung',14500,['Comfort wing tip','ANC','Up to 30h battery','Auto switch'],fallbackImage('Galaxy Buds FE')]],
-      'Speakers':[['JBL Flip 6','JBL',17999,['IP67 waterproof','12-hour battery','30W output','PartyBoost'],fallbackImage('JBL Flip 6','#3b2a24')],['Sony SRS-XB100','Sony',8999,['Extra bass','16-hour battery','IP67 rated','Hands-free calling'],fallbackImage('Sony SRS-XB100')],['Anker Soundcore Motion+','Anker',16499,['Hi-Res Audio','30W output','12-hour battery','IPX7 waterproof'],fallbackImage('Soundcore Motion+')],['Harman Kardon Go + Play','Harman Kardon',42999,['160W audio','Premium carry handle','8-hour battery','Dual far-field mics'],fallbackImage('Go + Play')]],
-      'Power Banks':[['Anker PowerCore 20,000mAh','Anker',8999,['20,000mAh capacity','18W PowerIQ','USB-C input','MultiProtect safety'],'images/products/anker-powerbank.svg'],['Oraimo PowerBox 30,000mAh','Oraimo',7499,['30,000mAh','22.5W quick charge','Triple output ports','LED power display'],fallbackImage('Oraimo PowerBox')],['Xiaomi 20,000mAh Power Bank','Xiaomi',5999,['20,000mAh','18W fast charging','Dual USB-A output','Smart temperature control'],fallbackImage('Xiaomi Power Bank')],['Baseus 10,000mAh Power Bank','Baseus',4999,['10,000mAh','PD 20W','Compact body','Pass-through charging'],fallbackImage('Baseus 10000')]],
-      'Chargers & Cables':[['Apple 20W USB-C Adapter','Apple',3799,['20W output','USB-C port','Fast iPhone charging','Compact build'],fallbackImage('Apple 20W Adapter')],['Samsung 25W Super Fast Charger','Samsung',2999,['PPS support','USB-C output','25W max power','Overheat protection'],fallbackImage('Samsung 25W Charger')],['Anker USB-C to Lightning Cable','Anker',2499,['MFi certified','1.8m braided cable','Power Delivery ready','12,000 bend lifespan'],fallbackImage('Anker Lightning Cable')],['Baseus 65W GaN Charger','Baseus',6499,['65W GaN power','Dual USB-C + USB-A','Laptop+phone charging','Foldable plug'],fallbackImage('Baseus 65W GaN')]],
-      'Gaming Accessories':[['PS5 DualSense Controller','Sony',12499,['Haptic feedback','Adaptive triggers','Built-in mic','USB-C charging'],fallbackImage('PS5 DualSense','#2e2042')],['Logitech G Pro Wireless Mouse','Logitech',16999,['LIGHTSPEED wireless','25K HERO sensor','80g lightweight','60h battery'],fallbackImage('Logitech G Pro')],['Razer BlackShark V2 Headset','Razer',13999,['THX Spatial Audio','TriForce 50mm drivers','Detachable mic','Memory foam cushions'],fallbackImage('BlackShark V2')],['Xbox Wireless Controller','Microsoft',9999,['Bluetooth + Xbox Wireless','Textured grips','Share button','3.5mm headset jack'],fallbackImage('Xbox Controller')]],
-      'Phone Accessories':[['iPhone MagSafe Case','Apple',5999,['MagSafe compatible','Shock absorbent edges','Anti-yellow coating','Precision cutouts'],fallbackImage('MagSafe Case','#1f2f3f')],['Samsung S24 Ultra Case','Samsung',3499,['Military-grade drop protection','Raised camera lip','Slim profile','Wireless charging ready'],fallbackImage('S24 Ultra Case')],['Spigen Screen Protector','Spigen',2799,['9H tempered glass','Oleophobic coating','Easy install tray','2-pack'],fallbackImage('Spigen Protector')],['UGREEN Phone Stand','UGREEN',1999,['Adjustable viewing angle','Aluminum alloy body','Anti-slip pads','Foldable design'],fallbackImage('UGREEN Stand')]],
-      'Smart Home Devices':[['Google Nest Mini','Google',8999,['Google Assistant','Voice Match','Wi-Fi + Bluetooth','Wall-mount ready'],fallbackImage('Google Nest Mini','#0f3540')],['Xiaomi Mi Smart Camera','Xiaomi',6999,['1080p video','Night vision','Two-way audio','Motion alerts'],fallbackImage('Mi Smart Camera')],['TP-Link Smart Plug','TP-Link',3299,['Remote app control','Schedule automation','Energy monitoring','Voice assistant support'],fallbackImage('TP-Link Smart Plug')],['Amazon Echo Dot','Amazon',10999,['Alexa built-in','Improved bass','Smart home routines','Privacy controls'],fallbackImage('Echo Dot')]],
-      'Cameras & Creator Gear':[['Canon EOS M50 Mark II','Canon',114999,['24.1MP APS-C sensor','4K video','Dual Pixel AF','Vari-angle touchscreen'],fallbackImage('Canon EOS M50','#3a2330')],['DJI Osmo Mobile 6','DJI',19999,['3-axis stabilization','ActiveTrack 6.0','Portable foldable design','ShotGuides'],fallbackImage('DJI Osmo Mobile 6')],['Boya BY-M1 Lavalier Mic','Boya',2699,['Omnidirectional pickup','6m cable','Camera/phone compatible','Foam windscreen'],fallbackImage('Boya BY-M1 Mic')],['Neewer LED Ring Light Kit','Neewer',12999,['18" dimmable ring light','Adjustable stand','Phone holder included','3200K-5600K'],fallbackImage('Neewer Ring Light')]]
-    };
-    const products = Object.entries(data).flatMap(([category, items], catIndex) => items.map((it, idx) => ({ id: `${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${idx+1}`, name:it[0], brand:it[1], category, price:it[2], specs:it[3], image:it[4], rating:(4.2+((idx+catIndex)%4)*0.2).toFixed(1), reviews: 48 + catIndex*19 + idx*13, stock: idx===3 ? 'Low stock':'In stock', delivery: idx%2===0 ? 'Same-day Nairobi':'Next-day Kenya-wide', support:'12-month warranty • Genuine products' })));
+    const fallbackThumbs = [
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1600086827875-a63b01f1335c?auto=format&fit=crop&w=800&q=80'
+    ];
+    const categories = [
+      { name: 'All Products', image: 'images/categories/accessories.svg' }, { name: 'Smartphones', image: 'images/categories/smartphones.svg' },
+      { name: 'Laptops', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80' }, { name: 'Tablets', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Smart Watches', image: 'images/categories/smartwatches.svg' }, { name: 'Headphones & Earbuds', image: 'images/categories/audio.svg' },
+      { name: 'Speakers', image: 'https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=500&q=80' }, { name: 'Power Banks', image: 'images/categories/power-banks.svg' },
+      { name: 'Chargers & Cables', image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80' }, { name: 'Gaming Accessories', image: 'images/categories/gaming.svg' },
+      { name: 'Phone Accessories', image: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=500&q=80' }, { name: 'Smart Home Devices', image: 'https://images.unsplash.com/photo-1558002038-1055e2dae1d7?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Cameras & Creator Gear', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80' }
+    ];
+    const products = [];
+    const makeProduct = (cat, idx) => ({
+      id: `${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${idx}`,
+      name: `${['Pro','Ultra','Max','Lite'][idx%4]} ${cat.replace('&','').trim()} ${idx+1}`,
+      brand: ['Samsung','Apple','Sony','Anker','JBL','Logitech','Xiaomi','Oraimo'][idx%8],
+      category: cat,
+      price: 4500 + (idx * 3200) + (cat.length * 150),
+      rating: (4 + ((idx%5)*0.1)).toFixed(1),
+      reviews: 40 + idx * 17,
+      stock: idx % 4 === 0 ? 'Low stock' : 'In stock',
+      delivery: idx % 2 === 0 ? 'Same-day Nairobi' : 'Next-day Kenya-wide',
+      specs: [`${64 + idx * 32}GB`, `${12 + idx} Months Warranty`, idx % 2 ? 'USB-C Fast Charge' : 'Bluetooth 5.3'],
+      image: fallbackThumbs[(idx + cat.length) % fallbackThumbs.length],
+      fallback: fallbackThumbs[(idx + cat.length + 1) % fallbackThumbs.length]
+    });
+    categories.filter(c => c.name !== 'All Products').forEach((c) => { for (let i = 0; i < 4; i++) products.push(makeProduct(c.name, i)); });
+    products[0].name = 'Galaxy S24 Ultra'; products[1].name = 'iPhone 15 Pro Max'; products[2].name = 'Xperia 1 VI'; products[3].name = 'Redmi Note 13 Pro';
     let activeCategory = 'All Products';
     let cart = JSON.parse(localStorage.getItem('gadgethub_cart') || '[]');
+
     const formatKES = (value) => `KSh ${value.toLocaleString('en-KE')}`;
     const countByCategory = (name) => name === 'All Products' ? products.length : products.filter((p) => p.category === name).length;
-    const getProductImage = (p) => p.image || fallbackImage(p.name);
-    const onImageError = (img, label) => { img.onerror = null; img.src = fallbackImage(label); };
-    function renderCategories() { categoryGrid.innerHTML = categories.map((cat) => `<button class='category-chip ${activeCategory===cat.name?'active':''}' data-category='${cat.name}' aria-label='${cat.name}'><img src='${cat.image}' alt='${cat.name}' onerror="this.onerror=null;this.src='${fallbackImage(cat.name)}'"/><div><strong>${cat.name}</strong><small>${countByCategory(cat.name)} products</small></div></button>`).join(''); categorySummary.textContent = `${categories.length - 1} electronics categories available`; }
-    function renderProducts() { const query = searchInput.value.trim().toLowerCase(); const filtered = products.filter((p) => (activeCategory === 'All Products' || p.category === activeCategory) && `${p.name} ${p.brand} ${p.category} ${p.specs.join(' ')}`.toLowerCase().includes(query)); resultsSummary.textContent = `${filtered.length} product${filtered.length===1?'':'s'} shown in ${activeCategory}`; productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class='product-card' data-product-id='${p.id}'><img src='${getProductImage(p)}' alt='${p.name}' onerror="this.onerror=null;this.src='${fallbackImage(p.name)}'"/><div class='product-body'><strong class='product-title'>${p.name}</strong><div class='meta'>${p.brand} • ${p.category}</div><div class='price'>${formatKES(p.price)}</div><div class='rating'>★ ${p.rating} (${p.reviews} reviews)</div><div class='stock ${p.stock==='In stock'?'in':'out'}'>${p.stock}</div><div class='delivery'>${p.delivery}</div><ul class='spec-list'>${p.specs.slice(0,2).map(s=>`<li>${s}</li>`).join('')}</ul><div class='actions'><button data-action='add'>Add to Cart</button><button data-action='details'>View Details</button><button data-action='wa'>WhatsApp</button></div></div></article>`).join('') : `<div class='empty-state'><strong>No products found</strong><p>Try another search term or switch category.</p></div>`; }
+    function renderCategories() {
+      categoryGrid.innerHTML = categories.map((cat) => `
+        <button class="category-chip ${activeCategory===cat.name?'active':''}" data-category="${cat.name}" aria-label="${cat.name}">
+          <img src="${cat.image}" alt="${cat.name}" onerror="this.onerror=null;this.src='${fallbackThumbs[0]}'">
+          <div><strong>${cat.name}</strong><small>${countByCategory(cat.name)} products</small></div>
+        </button>`).join('');
+      categorySummary.textContent = `${categories.length - 1} electronics categories available`;
+    }
+    function renderProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = products.filter((p) => (activeCategory === 'All Products' || p.category === activeCategory) && `${p.name} ${p.brand} ${p.category} ${p.specs.join(' ')}`.toLowerCase().includes(query));
+      resultsSummary.textContent = `${filtered.length} product${filtered.length===1?'':'s'} shown in ${activeCategory}`;
+      productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class="product-card" data-product-id="${p.id}">
+        <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
+        <div class="product-body"><strong>${p.name}</strong><div class="meta">${p.brand} • ${p.category}</div>
+        <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div>
+        <div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
+        <ul class="spec-list">${p.specs.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
+        <div class="actions"><button data-action="add">Add to Cart</button><button data-action="details">View Details</button><button data-action="wa">WhatsApp</button></div></div></article>`).join('')
+      : `<div class="empty-state"><strong>No products found</strong><p>Try another search term or switch category.</p></div>`;
+    }
     const persistCart = () => localStorage.setItem('gadgethub_cart', JSON.stringify(cart));
-    const updateCartCount = () => { const count = cart.reduce((n, i) => n + i.qty, 0); cartCount.textContent = String(count); mobileCartCount.textContent = String(count); };
+    const updateCartCount = () => {
+      const count = cart.reduce((n, i) => n + i.qty, 0);
+      cartCount.textContent = String(count);
+      mobileCartCount.textContent = String(count);
+    };
     const productWA = (p) => `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I’m interested in ${p.name} at ${formatKES(p.price)}. Please confirm availability.`)}`;
-    function addToCart(productId) { const item = cart.find((i) => i.id === productId); if (item) item.qty += 1; else { const p = products.find((x) => x.id === productId); if (!p) return; cart.push({ id: p.id, name: p.name, price: p.price, image: getProductImage(p), qty: 1 }); } persistCart(); updateCartCount(); renderCart(); }
-    function renderCart() { const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0); cartItems.innerHTML = cart.map((i) => `<div class='cart-item' data-id='${i.id}'><img src='${i.image}' alt='${i.name}' onerror="this.onerror=null;this.src='${fallbackImage(i.name)}'"/><div><strong>${i.name}</strong><div>${formatKES(i.price)}</div><div class='qty-controls'><button data-cart='minus'>-</button><span>${i.qty}</span><button data-cart='plus'>+</button><button class='remove-btn' data-cart='remove'>Remove</button></div></div><strong>${formatKES(i.price*i.qty)}</strong></div>`).join(''); cartSubtotal.textContent = formatKES(subtotal); const empty = cart.length === 0; cartEmpty.classList.toggle('hidden', !empty); document.getElementById('cartSummary').classList.toggle('hidden', empty); checkoutBtn.href = `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I want to order:
-${cart.map(i=>`- ${i.name} x${i.qty} = ${formatKES(i.price*i.qty)}`).join('
-')}
-
-Subtotal: ${formatKES(subtotal)}
-Please confirm availability and Nairobi delivery timing.`)}`; }
-    function openModal(productId) { const p = products.find((x) => x.id === productId); if (!p) return; modalContent.innerHTML = `<img src='${getProductImage(p)}' alt='${p.name}' onerror="this.onerror=null;this.src='${fallbackImage(p.name)}'"/><div><h3 style='margin:.1rem 0;'>${p.name}</h3><div class='meta'>${p.brand} • ${p.category}</div><div class='price'>${formatKES(p.price)}</div><div class='rating'>★ ${p.rating} (${p.reviews} reviews)</div><div class='stock ${p.stock==='In stock'?'in':'out'}'>${p.stock}</div><div class='delivery'>${p.delivery}</div><ul class='spec-list'>${p.specs.map(s=>`<li>${s}</li>`).join('')}</ul><p class='meta'>${p.support}. ${p.delivery} available.</p><div class='modal-actions'><button data-modal-add='${p.id}'>Add to Cart</button><a href='${productWA(p)}' target='_blank' rel='noopener'>Chat on WhatsApp</a></div></div>`; overlay.classList.add('open'); productModal.classList.add('open'); document.body.classList.add('no-scroll'); }
+    function addToCart(productId) {
+      const item = cart.find((i) => i.id === productId);
+      if (item) item.qty += 1;
+      else {
+        const p = products.find((x) => x.id === productId);
+        if (!p) return;
+        cart.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty: 1 });
+      }
+      persistCart(); updateCartCount(); renderCart();
+    }
+    function renderCart() {
+      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      cartItems.innerHTML = cart.map((i) => `<div class="cart-item" data-id="${i.id}">
+        <img src="${i.image}" alt="${i.name}"><div><strong>${i.name}</strong><div>${formatKES(i.price)}</div>
+        <div class="qty-controls"><button data-cart="minus">-</button><span>${i.qty}</span><button data-cart="plus">+</button><button class="remove-btn" data-cart="remove">Remove</button></div></div>
+        <strong>${formatKES(i.price*i.qty)}</strong></div>`).join('');
+      cartSubtotal.textContent = formatKES(subtotal);
+      const empty = cart.length === 0;
+      cartEmpty.classList.toggle('hidden', !empty);
+      document.getElementById('cartSummary').classList.toggle('hidden', empty);
+      checkoutBtn.href = `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I want to order:\n${cart.map(i=>`- ${i.name} x${i.qty} = ${formatKES(i.price*i.qty)}`).join('\n')}\n\nSubtotal: ${formatKES(subtotal)}\nPlease confirm availability and Nairobi delivery timing.`)}`;
+    }
+    function openModal(productId) {
+      const p = products.find((x) => x.id === productId); if (!p) return;
+      modalContent.innerHTML = `<img src="${p.image}" alt="${p.name}"><div><h3 style="margin:.1rem 0;">${p.name}</h3><div class="meta">${p.brand} • ${p.category}</div>
+      <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div><div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
+      <ul class="spec-list">${p.specs.map(s=>`<li>${s}</li>`).join('')}</ul><p class="meta">Warranty and delivery support available. Same-day dispatch options apply where available.</p>
+      <div class="modal-actions"><button data-modal-add="${p.id}">Add to Cart</button><a href="${productWA(p)}" target="_blank" rel="noopener">Chat on WhatsApp</a></div></div>`;
+      overlay.classList.add('open'); productModal.classList.add('open'); document.body.classList.add('no-scroll');
+    }
     const closeLayers = () => { overlay.classList.remove('open'); productModal.classList.remove('open'); cartDrawer.classList.remove('open'); document.body.classList.remove('no-scroll'); };
     const openCart = () => { overlay.classList.add('open'); cartDrawer.classList.add('open'); document.body.classList.add('no-scroll'); renderCart(); };
-    menuBtn.addEventListener('click', () => { const isOpen = mobileMenu.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(isOpen)); });
-    mobileMenu.querySelectorAll('a').forEach((link) => { link.addEventListener('click', () => { mobileMenu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }); });
-    categoryGrid.addEventListener('click', (e) => { const button = e.target.closest('[data-category]'); if (!button) return; activeCategory = button.dataset.category; renderCategories(); renderProducts(); });
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    categoryGrid.addEventListener('click', (e) => {
+      const button = e.target.closest('[data-category]');
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderCategories();
+      renderProducts();
+    });
     searchInput.addEventListener('input', renderProducts);
-    productGrid.addEventListener('click', (e) => { const card = e.target.closest('[data-product-id]'); if (!card) return; const id = card.dataset.productId; const btn = e.target.closest('button'); if (!btn) return; if (btn.dataset.action === 'add') { addToCart(id); const original = btn.textContent; btn.textContent = 'Added ✓'; setTimeout(() => { btn.textContent = original; }, 900); } else if (btn.dataset.action === 'details') openModal(id); else if (btn.dataset.action === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener'); });
-    modalContent.addEventListener('click', (e) => { const id = e.target.dataset.modalAdd; if (!id) return; addToCart(id); e.target.textContent = 'Added ✓'; setTimeout(() => { e.target.textContent = 'Add to Cart'; }, 900); });
-    cartItems.addEventListener('click', (e) => { const row = e.target.closest('.cart-item'); if (!row) return; const item = cart.find(i=>i.id===row.dataset.id); if (!item) return; if (e.target.dataset.cart === 'plus') item.qty += 1; if (e.target.dataset.cart === 'minus') item.qty = Math.max(1, item.qty - 1); if (e.target.dataset.cart === 'remove') cart = cart.filter(i=>i.id!==item.id); persistCart(); updateCartCount(); renderCart(); });
-    cartOpenBtn.addEventListener('click', openCart); document.querySelector('[data-cart-open]').addEventListener('click', (e) => { e.preventDefault(); openCart(); }); document.querySelector('[data-close-cart]').addEventListener('click', closeLayers); document.querySelector('[data-close-modal]').addEventListener('click', closeLayers); overlay.addEventListener('click', closeLayers); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLayers(); });
-    renderCategories(); renderProducts(); updateCartCount(); renderCart();
-    console.assert(products.length === 48, 'Expected 48 products');
-    console.assert(categories.filter(c => c.name !== 'All Products').length === 12, 'Expected 12 categories');
-    console.assert(new Set(products.map(p => p.id)).size === products.length, 'IDs must be unique');
-    console.assert(products.every(p => p.name && p.brand && p.category && p.price && p.specs?.length >= 2 && p.image), 'Product fields missing');
+    productGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-product-id]'); if (!card) return;
+      const id = card.dataset.productId;
+      const btn = e.target.closest('button'); if (!btn) return;
+      if (btn.dataset.action === 'add') {
+        addToCart(id); const original = btn.textContent; btn.textContent = 'Added ✓'; setTimeout(() => { btn.textContent = original; }, 900);
+      } else if (btn.dataset.action === 'details') openModal(id);
+      else if (btn.dataset.action === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
+    });
+    modalContent.addEventListener('click', (e) => {
+      const id = e.target.dataset.modalAdd; if (!id) return; addToCart(id);
+      e.target.textContent = 'Added ✓'; setTimeout(() => { e.target.textContent = 'Add to Cart'; }, 900);
+    });
+    cartItems.addEventListener('click', (e) => {
+      const row = e.target.closest('.cart-item'); if (!row) return; const item = cart.find(i=>i.id===row.dataset.id); if (!item) return;
+      if (e.target.dataset.cart === 'plus') item.qty += 1;
+      if (e.target.dataset.cart === 'minus') item.qty = Math.max(1, item.qty - 1);
+      if (e.target.dataset.cart === 'remove') cart = cart.filter(i=>i.id!==item.id);
+      persistCart(); updateCartCount(); renderCart();
+    });
+    cartOpenBtn.addEventListener('click', openCart);
+    document.querySelector('[data-cart-open]').addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    document.querySelector('[data-close-cart]').addEventListener('click', closeLayers);
+    document.querySelector('[data-close-modal]').addEventListener('click', closeLayers);
+    overlay.addEventListener('click', closeLayers);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLayers(); });
+    renderCategories();
+    renderProducts();
+    updateCartCount();
+    renderCart();
   </script>
 </body>
 </html>
