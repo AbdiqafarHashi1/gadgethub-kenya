@@ -129,6 +129,34 @@
     section { margin-top: 1.2rem; }
     .placeholder h2 { margin: 0 0 .3rem; font-size: 1.2rem; }
     .placeholder p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom: .85rem; }
+    .section-head p { margin:0; color:var(--muted); font-size:.9rem; }
+    .category-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:.75rem; }
+    .category-chip {
+      border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:.95rem; padding:.7rem; color:var(--text);
+      display:grid; grid-template-columns:56px 1fr; gap:.7rem; align-items:center; cursor:pointer;
+    }
+    .category-chip img { width:56px; height:56px; object-fit:cover; border-radius:.7rem; border:1px solid rgba(255,255,255,.08);}
+    .category-chip small { color:var(--muted); display:block; }
+    .category-chip.active { border-color:var(--accent); box-shadow:0 0 0 1px rgba(245,194,0,.24) inset; }
+    .search-wrap { margin:.7rem 0 1rem; }
+    .search-wrap input {
+      width:100%; border:1px solid var(--line); background:#0d1320; color:var(--text); border-radius:.8rem; padding:.8rem .95rem;
+    }
+    .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.8rem; }
+    .product-card { border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; }
+    .product-card img { width:100%; aspect-ratio: 4/3; object-fit:cover; background:#0a0f19; }
+    .product-body { padding:.8rem; display:grid; gap:.45rem; }
+    .meta { color:var(--muted); font-size:.85rem; }
+    .price { font-size:1.1rem; font-weight:800; color:var(--accent); }
+    .rating { font-size:.85rem; color:#ffd44f; }
+    .stock.in { color:#7ff4ad; font-weight:700; font-size:.82rem; }
+    .stock.out { color:#ff9f9f; font-weight:700; font-size:.82rem; }
+    .delivery { color:#9ed2ff; font-size:.82rem; }
+    .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.82rem; }
+    .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:.25rem; }
+    .actions button { border:1px solid #374055; background:#1a2334; color:#8190ab; border-radius:.5rem; padding:.45rem; font-size:.72rem; cursor:not-allowed; }
+    .empty-state { border:1px dashed #47536d; background:rgba(14,20,33,.7); border-radius:1rem; padding:1rem; text-align:center; color:var(--muted);}
 
     .mobile-nav {
       display: none;
@@ -235,8 +263,15 @@
       <div class="badge">✅ Warranty Support</div>
     </section>
 
-    <section id="categories" class="placeholder"><h2>Categories (Placeholder)</h2><p>Category grid area reserved for Phase 2 data binding.</p></section>
-    <section id="products" class="placeholder"><h2>Products (Placeholder)</h2><p>Product cards section reserved for Phase 2 rendering.</p></section>
+    <section id="categories" class="placeholder">
+      <div class="section-head"><h2>Shop by Category</h2><p id="categorySummary">Browse all electronics categories</p></div>
+      <div id="categoryGrid" class="category-grid" aria-live="polite"></div>
+    </section>
+    <section id="products" class="placeholder">
+      <div class="section-head"><h2>Products</h2><p id="resultsSummary">Loading product catalog...</p></div>
+      <div class="search-wrap"><input id="searchInput" type="search" placeholder="Search by name, brand, category, or specs..." aria-label="Search products"></div>
+      <div id="productGrid" class="products-grid" aria-live="polite"></div>
+    </section>
     <section id="featured" class="placeholder"><h2>Featured Product (Placeholder)</h2><p>Featured product card will be introduced in next phase.</p></section>
     <section id="testimonials" class="placeholder"><h2>Testimonials (Placeholder)</h2><p>Customer proof and ratings block will be added later.</p></section>
     <section id="newsletter" class="placeholder"><h2>Newsletter (Placeholder)</h2><p>Email capture and engagement module reserved for upcoming phase.</p></section>
@@ -260,6 +295,69 @@
   <script>
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
+    const categoryGrid = document.getElementById('categoryGrid');
+    const productGrid = document.getElementById('productGrid');
+    const searchInput = document.getElementById('searchInput');
+    const resultsSummary = document.getElementById('resultsSummary');
+    const categorySummary = document.getElementById('categorySummary');
+    const fallbackThumbs = [
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1600086827875-a63b01f1335c?auto=format&fit=crop&w=800&q=80'
+    ];
+    const categories = [
+      { name: 'All Products', image: 'images/categories/accessories.svg' }, { name: 'Smartphones', image: 'images/categories/smartphones.svg' },
+      { name: 'Laptops', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80' }, { name: 'Tablets', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Smart Watches', image: 'images/categories/smartwatches.svg' }, { name: 'Headphones & Earbuds', image: 'images/categories/audio.svg' },
+      { name: 'Speakers', image: 'https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=500&q=80' }, { name: 'Power Banks', image: 'images/categories/power-banks.svg' },
+      { name: 'Chargers & Cables', image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=500&q=80' }, { name: 'Gaming Accessories', image: 'images/categories/gaming.svg' },
+      { name: 'Phone Accessories', image: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=500&q=80' }, { name: 'Smart Home Devices', image: 'https://images.unsplash.com/photo-1558002038-1055e2dae1d7?auto=format&fit=crop&w=500&q=80' },
+      { name: 'Cameras & Creator Gear', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80' }
+    ];
+    const products = [];
+    const makeProduct = (cat, idx) => ({
+      id: `${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${idx}`,
+      name: `${['Pro','Ultra','Max','Lite'][idx%4]} ${cat.replace('&','').trim()} ${idx+1}`,
+      brand: ['Samsung','Apple','Sony','Anker','JBL','Logitech','Xiaomi','Oraimo'][idx%8],
+      category: cat,
+      price: 4500 + (idx * 3200) + (cat.length * 150),
+      rating: (4 + ((idx%5)*0.1)).toFixed(1),
+      reviews: 40 + idx * 17,
+      stock: idx % 4 === 0 ? 'Low stock' : 'In stock',
+      delivery: idx % 2 === 0 ? 'Same-day Nairobi' : 'Next-day Kenya-wide',
+      specs: [`${64 + idx * 32}GB`, `${12 + idx} Months Warranty`, idx % 2 ? 'USB-C Fast Charge' : 'Bluetooth 5.3'],
+      image: fallbackThumbs[(idx + cat.length) % fallbackThumbs.length],
+      fallback: fallbackThumbs[(idx + cat.length + 1) % fallbackThumbs.length]
+    });
+    categories.filter(c => c.name !== 'All Products').forEach((c) => { for (let i = 0; i < 4; i++) products.push(makeProduct(c.name, i)); });
+    products[0].name = 'Galaxy S24 Ultra'; products[1].name = 'iPhone 15 Pro Max'; products[2].name = 'Xperia 1 VI'; products[3].name = 'Redmi Note 13 Pro';
+    let activeCategory = 'All Products';
+
+    const formatKES = (value) => `KSh ${value.toLocaleString('en-KE')}`;
+    const countByCategory = (name) => name === 'All Products' ? products.length : products.filter((p) => p.category === name).length;
+    function renderCategories() {
+      categoryGrid.innerHTML = categories.map((cat) => `
+        <button class="category-chip ${activeCategory===cat.name?'active':''}" data-category="${cat.name}" aria-label="${cat.name}">
+          <img src="${cat.image}" alt="${cat.name}" onerror="this.onerror=null;this.src='${fallbackThumbs[0]}'">
+          <div><strong>${cat.name}</strong><small>${countByCategory(cat.name)} products</small></div>
+        </button>`).join('');
+      categorySummary.textContent = `${categories.length - 1} electronics categories available`;
+    }
+    function renderProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = products.filter((p) => (activeCategory === 'All Products' || p.category === activeCategory) && `${p.name} ${p.brand} ${p.category} ${p.specs.join(' ')}`.toLowerCase().includes(query));
+      resultsSummary.textContent = `${filtered.length} product${filtered.length===1?'':'s'} shown in ${activeCategory}`;
+      productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class="product-card">
+        <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
+        <div class="product-body"><strong>${p.name}</strong><div class="meta">${p.brand} • ${p.category}</div>
+        <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div>
+        <div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
+        <ul class="spec-list">${p.specs.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
+        <div class="actions"><button disabled>Add to Cart</button><button disabled>View Details</button><button disabled>WhatsApp</button></div></div></article>`).join('')
+      : `<div class="empty-state"><strong>No products found</strong><p>Try another search term or switch category.</p></div>`;
+    }
 
     menuBtn.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('open');
@@ -272,6 +370,16 @@
         menuBtn.setAttribute('aria-expanded', 'false');
       });
     });
+    categoryGrid.addEventListener('click', (e) => {
+      const button = e.target.closest('[data-category]');
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderCategories();
+      renderProducts();
+    });
+    searchInput.addEventListener('input', renderProducts);
+    renderCategories();
+    renderProducts();
   </script>
 </body>
 </html>
