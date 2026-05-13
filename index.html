@@ -139,7 +139,7 @@
       padding: .9rem;
     }
 
-    section { margin-top: 1.2rem; }
+    section { margin-top: 1.35rem; }
     .placeholder h2 { margin: 0 0 .3rem; font-size: 1.2rem; }
     .placeholder p { margin: 0; color: var(--muted); font-size: .95rem; }
     .section-head { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom: .85rem; }
@@ -161,20 +161,20 @@
     }
     .search-wrap input::placeholder { color:#8390a7; }
     .search-wrap input:focus { outline:none; border-color:rgba(245,194,0,.7); box-shadow:0 0 0 3px rgba(245,194,0,.16); }
-    .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.8rem; }
-    .product-card { border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease; }
+    .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.95rem; align-items:stretch; }
+    .product-card { border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; min-height:100%; height:100%; transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease; }
     .product-card:hover { transform:translateY(-3px); border-color:rgba(245,194,0,.46); box-shadow:0 18px 30px rgba(0,0,0,.28), 0 0 0 1px rgba(245,194,0,.12) inset; }
-    .product-card img { width:100%; aspect-ratio: 4/3; object-fit:cover; background:radial-gradient(circle at 20% 20%, #1f2e4b, #0a0f19); padding:.35rem; border-bottom:1px solid rgba(255,255,255,.06); }
-    .product-body { padding:.9rem; display:grid; gap:.5rem; }
-    .meta { color:var(--muted); font-size:.85rem; }
+    .product-card img { width:100%; aspect-ratio: 4/3; object-fit:contain; object-position:center; background:radial-gradient(circle at 20% 20%, #1f2e4b, #0a0f19); padding:.55rem; border-bottom:1px solid rgba(255,255,255,.06); }
+    .product-body { padding:.95rem; display:flex; flex-direction:column; gap:.45rem; flex:1; }
+    .meta { color:var(--muted); font-size:.84rem; line-height:1.35; }
     .price { font-size:1.1rem; font-weight:800; color:var(--accent); }
     .rating { font-size:.85rem; color:#ffd44f; }
     .stock.in { color:#7ff4ad; font-weight:700; font-size:.82rem; }
     .stock.out { color:#ff9f9f; font-weight:700; font-size:.82rem; }
     .delivery { color:#9ed2ff; font-size:.82rem; }
-    .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.82rem; }
-    .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:.25rem; }
-    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.5rem; padding:.5rem .35rem; font-size:.72rem; cursor:pointer; font-weight:600; }
+    .spec-list { margin:.2rem 0 0; padding-left:1rem; color:#d0d6e4; font-size:.81rem; line-height:1.35; min-height:3.35rem; }
+    .actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.42rem; margin-top:auto; padding-top:.55rem; }
+    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.56rem; min-height:38px; padding:.52rem .42rem; font-size:.73rem; line-height:1.15; cursor:pointer; font-weight:700; display:grid; place-items:center; text-align:center; }
     .actions button:hover { border-color: var(--accent); }
     .cart-count {
       display:inline-grid; place-items:center; min-width:20px; height:20px; border-radius:99px; background:var(--accent); color:#121212; font-size:.72rem; font-weight:800; padding:0 .35rem;
@@ -276,13 +276,13 @@
     .mobile-category-toggle .toggle-copy small{font-size:.68rem;color:#f7e6a6;font-weight:700;letter-spacing:.01em;}
     .mobile-category-toggle .toggle-chevron{font-size:1rem;color:var(--accent);transition:transform .2s ease;}
     .mobile-category-toggle[aria-expanded="true"] .toggle-chevron{transform:rotate(180deg);}
-    .mobile-category-drawer{display:none;position:fixed;inset:auto 0 0 0;z-index:230;background:#0e1522;border-top:1px solid var(--line);border-radius:1rem 1rem 0 0;max-height:78vh;overflow:auto;padding:.85rem;transform:translateY(100%);transition:transform .24s ease;}
+    .mobile-category-drawer{display:none;position:fixed;inset:auto 0 0 0;z-index:230;background:#0e1522;border-top:1px solid var(--line);border-radius:1rem 1rem 0 0;max-height:78vh;overflow:auto;padding:.9rem .9rem 1rem;transform:translateY(100%);transition:transform .24s ease;box-shadow:0 -18px 34px rgba(0,0,0,.45);}
     .mobile-category-drawer.open{transform:translateY(0);}
-    .hero-cta{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap;}
-    .cta{padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--line);font-weight:700;}
+    .hero-cta{display:flex;gap:.7rem;margin-top:1.05rem;flex-wrap:wrap;align-items:center;}
+    .cta{padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--line);font-weight:700;display:inline-flex;align-items:center;justify-content:center;min-height:42px;}
     .cta.primary{background:var(--accent);color:#141414;border-color:var(--accent);}
     .cta.ghost{background:#111b2c;}
-    .hero-showcase{position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:360px;padding:1.1rem;border-radius:1rem;overflow:hidden;background:radial-gradient(circle at 62% 42%, rgba(245,194,0,.24), rgba(245,194,0,.06) 34%, rgba(8,12,20,.96) 72%);border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 36px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06);} 
+    .hero-showcase{position:relative;display:flex;align-items:center;justify-content:center;min-height:360px;padding:1rem 1.05rem;border-radius:1rem;overflow:hidden;background:radial-gradient(circle at 62% 42%, rgba(245,194,0,.24), rgba(245,194,0,.06) 34%, rgba(8,12,20,.96) 72%);border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 36px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06);} 
     .hero-showcase::after{content:"";position:absolute;left:8%;right:8%;bottom:16px;height:52px;border-radius:50%;background:radial-gradient(circle, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 70%);filter:blur(6px);} 
     .hero-showcase img{position:relative;z-index:1;width:min(100%, 600px);height:auto;display:block;filter:drop-shadow(0 14px 24px rgba(0,0,0,.5));}
     .badge{font-weight:700;}
@@ -291,6 +291,29 @@
     .category-chip img{width:72px;height:72px;border-radius:.8rem;object-fit:cover;}
 
 
+
+    .hero-item{position:absolute;z-index:2;max-width:58%;height:auto;object-fit:contain;filter:drop-shadow(0 20px 34px rgba(0,0,0,.5));}
+    .hero-phone{left:5%;bottom:7%;width:48%;transform:rotate(-10deg);}
+    .hero-headphones{right:2%;bottom:9%;width:50%;transform:rotate(7deg);}
+    .hero-watch{left:33%;top:6%;width:28%;transform:rotate(-4deg);}
+    .hero-earbuds{right:28%;top:14%;width:25%;transform:rotate(9deg);}
+    .featured-card{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:1rem;border:1px solid var(--line);background:linear-gradient(145deg,rgba(17,24,36,.95),rgba(12,17,28,.95));border-radius:1rem;padding:1rem;}
+    .featured-card img{width:100%;height:100%;max-height:320px;object-fit:cover;border-radius:.85rem;border:1px solid rgba(255,255,255,.08);background:#111a2b;}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;}
+    .testimonial-card{border:1px solid var(--line);background:rgba(18,25,38,.82);border-radius:.9rem;padding:.9rem;display:grid;gap:.5rem;}
+    .testimonial-card p{margin:0;color:#d4dced;font-size:.9rem;}
+    .testimonial-card strong{font-size:.92rem;}
+    .testimonial-card small{color:var(--muted);}
+    .newsletter-panel{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;border:1px solid var(--line);background:linear-gradient(125deg,rgba(245,194,0,.12),rgba(17,24,36,.95) 45%);border-radius:1rem;padding:1rem;}
+    .newsletter-panel p{margin:.2rem 0 0;color:var(--muted);}
+    .newsletter-form{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
+    .newsletter-form input{width:min(280px,100%);border:1px solid var(--line);background:#0d1320;color:var(--text);border-radius:.7rem;padding:.68rem .75rem;}
+    .site-footer{margin:1.5rem 0 6rem;border:1px solid var(--line);border-radius:1rem;padding:1.1rem;background:#0c1220;text-align:left;}
+    .footer-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;}
+    .site-footer h3{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent);}
+    .site-footer a,.site-footer p{display:block;margin:.28rem 0;color:var(--muted);font-size:.88rem;}
+    .footer-note{margin-top:.9rem;padding-top:.7rem;border-top:1px solid var(--line);color:#8c96ab;font-size:.84rem;text-align:center;}
+
     @media (min-width: 1025px) {
       .shop-layout { display:grid; grid-template-columns: 270px minmax(0,1fr); gap:1rem; align-items:start; }
       #categories { position:sticky; top:92px; margin-top:0; max-height:calc(100vh - 112px); overflow:auto; scrollbar-width:thin; scrollbar-color:#42506c #0b1019; }
@@ -298,7 +321,7 @@
       #categories::-webkit-scrollbar-thumb { background:#3a4762; border-radius:8px; }
       #products { margin-top:0; min-height:520px; }
       .category-grid { grid-template-columns:1fr; gap:.6rem; }
-      .category-chip { grid-template-columns:44px 1fr; padding:.58rem .65rem; }
+      .category-chip { grid-template-columns:44px 1fr; padding:.6rem .68rem; min-height:58px; }
       .category-chip img { width:44px; height:44px; }
       .products-grid { grid-template-columns: repeat(4, minmax(0,1fr)); gap:.9rem; }
       .cart-drawer { width:min(480px, 42vw); border-radius:1.1rem 0 0 1.1rem; }
@@ -320,7 +343,16 @@
       .logo small{display:none;}
       .cart-trigger { display:none; }
       .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 1.25rem; }
-      .hero-showcase{min-height:280px;padding:.8rem;}
+      .hero-showcase{min-height:300px;padding:.85rem;}
+      .hero-item{max-width:62%;}
+      .hero-phone{left:2%;bottom:8%;width:54%;}
+      .hero-headphones{right:-2%;bottom:12%;width:56%;}
+      .hero-watch{left:35%;top:5%;width:32%;}
+      .hero-earbuds{right:30%;top:17%;width:30%;}
+      .featured-card{grid-template-columns:1fr;}
+      .testimonials-grid{grid-template-columns:1fr;}
+      .newsletter-panel{grid-template-columns:1fr;}
+      .footer-grid{grid-template-columns:1fr 1fr;}
       .badges { grid-template-columns: 1fr 1fr; }
       .mobile-nav { display: block; }
       .mobile-category-toggle{display:flex;}
@@ -343,12 +375,13 @@
       .drawer-body { padding:.85rem .85rem calc(7.8rem + env(safe-area-inset-bottom)); }
       .cart-item { grid-template-columns:60px minmax(0,1fr); }
       .cart-item-total { grid-column:2; justify-self:end; margin-top:.25rem; }
-      .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;}
+      .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.72rem;}
+      .footer-grid{grid-template-columns:1fr;}
       .mobile-category-toggle{top:78px;}
-      .product-body{padding:.7rem;gap:.38rem;}
+      .product-body{padding:.74rem;gap:.4rem;}
       .product-body strong{font-size:.92rem;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-      .actions{grid-template-columns:1fr;gap:.3rem;}
-      .actions button{font-size:.7rem;padding:.48rem .3rem;}
+      .actions{grid-template-columns:1fr;gap:.34rem;}
+      .actions button{font-size:.71rem;padding:.5rem .35rem;min-height:36px;}
     }
 
     @media (max-width: 390px) {
@@ -368,7 +401,7 @@
         <a href="#categories">Categories</a>
         <a href="#newsletter">Deals</a>
         <a href="#featured">About Us</a>
-        <a href="#footer-placeholder">Contact</a>
+        <a href="#footer">Contact</a>
       </nav>
       <div class="header-search"><input id="desktopSearch" type="search" placeholder="Search for products, brands..." aria-label="Search products"></div>
       <div class="header-actions">
@@ -385,7 +418,7 @@
       <a href="#categories">Categories</a>
       <a href="#newsletter">Deals</a>
       <a href="#featured">About Us</a>
-      <a href="#footer-placeholder">Contact</a>
+      <a href="#footer">Contact</a>
     </div>
   </header>
 
@@ -400,8 +433,11 @@
             <a class="cta ghost" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20want%20help%20choosing%20a%20gadget." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
         </div>
-        <div class="hero-card hero-showcase">
-          <img src="images/hero/gadgethub-hero.svg" alt="Premium floating electronics showcase with smartphone, headphones, and smartwatch">
+        <div class="hero-card hero-showcase" aria-label="Premium electronics showcase">
+          <img class="hero-item hero-phone" src="images/products/samsung-s24-ultra.svg" alt="Samsung Galaxy smartphone showcase">
+          <img class="hero-item hero-headphones" src="images/products/sony-headphones.svg" alt="Sony premium headphones showcase">
+          <img class="hero-item hero-watch" src="images/products/apple-watch.svg" alt="Apple smartwatch showcase">
+          <img class="hero-item hero-earbuds" src="images/products/airpods-pro.svg" alt="Apple earbuds showcase">
         </div>
       </div>
     </section>
@@ -429,12 +465,41 @@
       <div id="productGrid" class="products-grid" aria-live="polite"></div>
     </section>
     </div>
-    <section id="featured" class="placeholder"><h2>Featured Product (Placeholder)</h2><p>Featured product card will be introduced in next phase.</p></section>
-    <section id="testimonials" class="placeholder"><h2>Testimonials (Placeholder)</h2><p>Customer proof and ratings block will be added later.</p></section>
-    <section id="newsletter" class="placeholder"><h2>Newsletter (Placeholder)</h2><p>Email capture and engagement module reserved for upcoming phase.</p></section>
-    <section id="footer-placeholder" class="placeholder"><h2>Footer (Placeholder)</h2><p>Expanded footer links and policy blocks will be added in upcoming phases.</p></section>
+    <section id="featured" class="placeholder featured-section">
+      <div class="section-head"><h2>Featured Product</h2><p>Top pick this week from GadgetHub Kenya</p></div>
+      <article id="featuredProductCard" class="featured-card" aria-live="polite"></article>
+    </section>
 
-    <footer>© 2026 GadgetHub Kenya. All rights reserved.</footer>
+    <section id="testimonials" class="placeholder testimonials-section">
+      <div class="section-head"><h2>Trusted by Nairobi Shoppers</h2><p>Real feedback from recent GadgetHub orders</p></div>
+      <div class="testimonials-grid">
+        <article class="testimonial-card"><p>“Ordered at 10AM and got my phone in Westlands before lunch. Packaging was pristine and the serial checked out as original.”</p><strong>— Brian M., Nairobi</strong><small>Verified order • Same-day delivery</small></article>
+        <article class="testimonial-card"><p>“I compared prices everywhere, but GadgetHub had the best deal and proper warranty paperwork. The WhatsApp support was super fast.”</p><strong>— Sheila N., Kilimani</strong><small>Verified order • Warranty support</small></article>
+        <article class="testimonial-card"><p>“Bought headphones and a power bank. Payment was easy via M-Pesa, and customer care followed up after delivery. Very premium experience.”</p><strong>— David K., Karen</strong><small>Verified order • Original products</small></article>
+      </div>
+    </section>
+
+    <section id="newsletter" class="placeholder newsletter-section">
+      <div class="section-head"><h2>Get Deals & Price Drop Alerts</h2><p>New arrivals, flash deals, and curated picks sent weekly</p></div>
+      <div class="newsletter-panel">
+        <div><strong>Join the GadgetHub insider list</strong><p>Receive launch alerts, restock notices, and weekend discounts for Nairobi delivery.</p></div>
+        <form class="newsletter-form" onsubmit="event.preventDefault()" aria-label="Deals signup">
+          <input type="email" placeholder="Enter your email address" aria-label="Email address">
+          <a class="cta primary" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20please%20send%20me%20new%20arrivals%20and%20price%20drop%20alerts." target="_blank" rel="noopener">Join via WhatsApp</a>
+          <button type="submit" class="cta ghost">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <footer id="footer" class="site-footer">
+      <div class="footer-grid">
+        <div><h3>Shop</h3><a href="#products">All Products</a><a href="#categories">Categories</a><a href="#featured">Featured Deals</a><a href="#newsletter">Price Drops</a></div>
+        <div><h3>Customer Care</h3><a href="https://wa.me/254700123456" target="_blank" rel="noopener">WhatsApp Support</a><a href="#products">Track an Order</a><a href="#testimonials">Returns & Exchanges</a><p>Warranty claims handled locally.</p></div>
+        <div><h3>Company</h3><a href="#hero">About GadgetHub</a><a href="#testimonials">Customer Reviews</a><a href="#newsletter">Careers & Partners</a><p>Original electronics from trusted brands.</p></div>
+        <div><h3>Contact</h3><a href="tel:+254700123456">+254 700 123 456</a><a href="https://wa.me/254700123456" target="_blank" rel="noopener">WhatsApp: 0700 123 456</a><p>Nairobi, Kenya</p><p>Delivery: Same-day in Nairobi • Next-day countrywide</p><p>Payments: M-Pesa, Card, Bank Transfer</p></div>
+      </div>
+      <div class="footer-note">© 2026 GadgetHub Kenya. All rights reserved.</div>
+    </footer>
   </main>
 
   <a class="wa-float" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20need%20help%20with%20a%20gadget." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
@@ -495,6 +560,7 @@
     const mobileCategoryToggle = document.getElementById('mobileCategoryToggle');
     const mobileCategoryDrawer = document.getElementById('mobileCategoryDrawer');
     const mobileCategoryGrid = document.getElementById('mobileCategoryGrid');
+    const featuredProductCard = document.getElementById('featuredProductCard');
     const fallbackThumbs = {
       general: 'https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=900&q=80',
       smartphones: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80',
@@ -609,6 +675,15 @@
 
     const formatKES = (value) => `KSh ${value.toLocaleString('en-KE')}`;
     const countByCategory = (name) => name === 'All Products' ? products.length : products.filter((p) => p.category === name).length;
+    const featuredProductId = 'iphone15promax-256';
+    function renderFeaturedProduct() {
+      const p = products.find((x) => x.id === featuredProductId) || products[0];
+      if (!p || !featuredProductCard) return;
+      featuredProductCard.innerHTML = `<img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
+      <div><strong style="font-size:1.3rem;line-height:1.2;display:block;">${p.name}</strong><div class="meta" style="margin:.35rem 0;">${p.brand} • ${p.category}</div>
+      <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div><ul class="spec-list">${p.specs.slice(0,4).map((s)=>`<li>${s}</li>`).join('')}</ul>
+      <div class="actions" style="max-width:460px;"><button data-featured-action="add" data-featured-id="${p.id}">Add to Cart</button><button data-featured-action="details" data-featured-id="${p.id}">View Details</button><button data-featured-action="wa" data-featured-id="${p.id}">WhatsApp</button></div></div>`;
+    }
     function renderCategories() {
       categoryGrid.innerHTML = categories.map((cat) => `
         <button class="category-chip ${activeCategory===cat.name?'active':''}" data-category="${cat.name}" aria-label="${cat.name}">
@@ -705,6 +780,13 @@
       searchInput.addEventListener('input', () => { desktopSearch.value = searchInput.value; });
     }
     document.querySelectorAll('[data-search-focus]').forEach((btn) => btn.addEventListener('click', () => { searchInput.scrollIntoView({behavior:'smooth', block:'center'}); searchInput.focus(); }));
+    featuredProductCard?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-featured-action]'); if (!btn) return;
+      const id = btn.dataset.featuredId;
+      if (btn.dataset.featuredAction === 'add') { addToCart(id); const original = btn.textContent; btn.textContent='Added ✓'; setTimeout(()=>btn.textContent=original,900);}
+      else if (btn.dataset.featuredAction === 'details') openModal(id);
+      else if (btn.dataset.featuredAction === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
+    });
     productGrid.addEventListener('click', (e) => {
       const card = e.target.closest('[data-product-id]'); if (!card) return;
       const id = card.dataset.productId;
@@ -737,6 +819,7 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLayers(); });
     renderCategories();
     renderProducts();
+    renderFeaturedProduct();
     updateCartCount();
     renderCart();
   </script>
