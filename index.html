@@ -265,6 +265,11 @@
     .wa-number{font-size:.86rem;color:#8df3ae;font-weight:700;}
     .icon-btn{display:none;border:1px solid var(--line);background:var(--bg-soft);color:var(--text);border-radius:.55rem;padding:.42rem .6rem;}
     .mobile-only{display:none;}
+    .mobile-cart-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;}
+    .mobile-cart-badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 .28rem;border-radius:999px;background:var(--accent);color:#121212;font-size:.68rem;font-weight:800;display:grid;place-items:center;line-height:1;}
+    .mobile-category-toggle{display:none;width:100%;align-items:center;justify-content:space-between;border:1px solid var(--line);background:#111a2a;color:var(--text);border-radius:.75rem;padding:.72rem .85rem;font-weight:700;cursor:pointer;margin-bottom:.7rem;}
+    .mobile-category-drawer{display:none;position:fixed;inset:auto 0 0 0;z-index:230;background:#0e1522;border-top:1px solid var(--line);border-radius:1rem 1rem 0 0;max-height:78vh;overflow:auto;padding:.85rem;transform:translateY(100%);transition:transform .24s ease;}
+    .mobile-category-drawer.open{transform:translateY(0);}
     .hero-cta{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap;}
     .cta{padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--line);font-weight:700;}
     .cta.primary{background:var(--accent);color:#141414;border-color:var(--accent);}
@@ -310,6 +315,9 @@
       .hero-showcase{min-height:280px;padding:.8rem;}
       .badges { grid-template-columns: 1fr 1fr; }
       .mobile-nav { display: block; }
+      .mobile-category-toggle{display:flex;}
+      #categories{display:none;}
+      .mobile-category-drawer{display:block;}
     }
 
     @media (max-width: 600px) {
@@ -327,6 +335,15 @@
       .drawer-body { padding:.85rem .85rem calc(7.8rem + env(safe-area-inset-bottom)); }
       .cart-item { grid-template-columns:60px minmax(0,1fr); }
       .cart-item-total { grid-column:2; justify-self:end; margin-top:.25rem; }
+      .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;}
+      .product-body{padding:.7rem;gap:.38rem;}
+      .product-body strong{font-size:.92rem;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+      .actions{grid-template-columns:1fr;gap:.3rem;}
+      .actions button{font-size:.7rem;padding:.48rem .3rem;}
+    }
+
+    @media (max-width: 390px) {
+      .products-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -349,7 +366,7 @@
         <a class="wa-number" href="https://wa.me/254700123456" target="_blank" rel="noopener">WhatsApp: 0700 123 456</a>
         <button class="icon-btn" aria-label="Search" data-search-focus>⌕</button>
         <button class="cart-trigger" id="cartOpenBtn" aria-label="Open cart">🛒 <span id="cartCount" class="cart-count">0</span><span class="cart-meta"><span class="cart-label">Your cart</span><span id="cartSubtotalPreview" class="cart-subtotal-preview">KSh 0</span></span></button>
-        <button class="icon-btn mobile-only" aria-label="Open cart" data-cart-open>🛒</button>
+        <button class="icon-btn mobile-only mobile-cart-btn" aria-label="Open cart" data-cart-open>🛒 <span id="mobileTopCartCount" class="mobile-cart-badge">0</span></button>
         <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰</button>
       </div>
     </div>
@@ -395,6 +412,7 @@
     </section>
     <section id="products" class="placeholder">
       <div class="section-head"><h2>Products</h2><p id="resultsSummary">Loading product catalog...</p></div>
+      <button id="mobileCategoryToggle" class="mobile-category-toggle" type="button" aria-expanded="false" aria-controls="mobileCategoryDrawer">Shop by Category <span>▾</span></button>
       <div class="search-wrap"><input id="searchInput" type="search" placeholder="Search by name, brand, category, or specs..." aria-label="Search products"></div>
       <div id="productGrid" class="products-grid" aria-live="polite"></div>
     </section>
@@ -408,6 +426,11 @@
   </main>
 
   <a class="wa-float" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20need%20help%20with%20a%20gadget." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
+
+  <aside id="mobileCategoryDrawer" class="mobile-category-drawer" aria-label="Mobile category drawer">
+    <div class="drawer-head"><strong>Shop by Category</strong><button class="close-btn" id="closeMobileCategory" type="button">✕</button></div>
+    <div id="mobileCategoryGrid" class="category-grid" aria-live="polite"></div>
+  </aside>
 
   <nav class="mobile-nav" aria-label="Bottom mobile navigation">
     <ul>
@@ -456,6 +479,10 @@
     const productModal = document.getElementById('productModal');
     const modalContent = document.getElementById('modalContent');
     const cartOpenBtn = document.getElementById('cartOpenBtn');
+    const mobileTopCartCount = document.getElementById('mobileTopCartCount');
+    const mobileCategoryToggle = document.getElementById('mobileCategoryToggle');
+    const mobileCategoryDrawer = document.getElementById('mobileCategoryDrawer');
+    const mobileCategoryGrid = document.getElementById('mobileCategoryGrid');
     const fallbackThumbs = {
       general: 'https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=900&q=80',
       smartphones: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80',
@@ -577,6 +604,7 @@
           <div><strong>${cat.name}</strong><small>${countByCategory(cat.name)} products</small></div>
         </button>`).join('');
       categorySummary.textContent = `${categories.length - 1} electronics categories available`;
+      if (mobileCategoryGrid) mobileCategoryGrid.innerHTML = categoryGrid.innerHTML;
     }
     function renderProducts() {
       const query = searchInput.value.trim().toLowerCase();
@@ -596,6 +624,7 @@
       const count = cart.reduce((n, i) => n + i.qty, 0);
       cartCount.textContent = String(count);
       mobileCartCount.textContent = String(count);
+      if (mobileTopCartCount) mobileTopCartCount.textContent = String(count);
     };
     const productWA = (p) => `https://wa.me/254700123456?text=${encodeURIComponent(`Hi GadgetHub Kenya, I’m interested in ${p.name} at ${formatKES(p.price)}. Please confirm availability.`)}`;
     function addToCart(productId) {
@@ -634,7 +663,9 @@
       <div class="modal-actions"><button data-modal-add="${p.id}">Add to Cart</button><a href="${productWA(p)}" target="_blank" rel="noopener">Chat on WhatsApp</a></div></div>`;
       overlay.classList.add('open'); productModal.classList.add('open'); document.body.classList.add('no-scroll');
     }
-    const closeLayers = () => { overlay.classList.remove('open'); productModal.classList.remove('open'); cartDrawer.classList.remove('open'); document.body.classList.remove('no-scroll'); };
+    const openMobileCategoryDrawer = () => { if (!mobileCategoryDrawer) return; mobileCategoryDrawer.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('no-scroll'); if (mobileCategoryToggle) mobileCategoryToggle.setAttribute('aria-expanded','true'); };
+    const closeMobileCategoryDrawer = () => { if (!mobileCategoryDrawer) return; mobileCategoryDrawer.classList.remove('open'); if (mobileCategoryToggle) mobileCategoryToggle.setAttribute('aria-expanded','false'); if (!productModal.classList.contains('open') && !cartDrawer.classList.contains('open')) { overlay.classList.remove('open'); document.body.classList.remove('no-scroll'); } };
+    const closeLayers = () => { overlay.classList.remove('open'); productModal.classList.remove('open'); cartDrawer.classList.remove('open'); closeMobileCategoryDrawer(); document.body.classList.remove('no-scroll'); };
     const openCart = () => { overlay.classList.add('open'); cartDrawer.classList.add('open'); document.body.classList.add('no-scroll'); renderCart(); };
 
     menuBtn.addEventListener('click', () => {
@@ -648,13 +679,14 @@
         menuBtn.setAttribute('aria-expanded', 'false');
       });
     });
-    categoryGrid.addEventListener('click', (e) => {
+    [categoryGrid, mobileCategoryGrid].forEach((grid) => grid && grid.addEventListener('click', (e) => {
       const button = e.target.closest('[data-category]');
       if (!button) return;
       activeCategory = button.dataset.category;
       renderCategories();
       renderProducts();
-    });
+      if (window.matchMedia('(max-width: 900px)').matches) closeMobileCategoryDrawer();
+    }));
     searchInput.addEventListener('input', renderProducts);
     if (desktopSearch) {
       desktopSearch.addEventListener('input', () => { searchInput.value = desktopSearch.value; renderProducts(); });
@@ -681,6 +713,8 @@
       if (e.target.dataset.cart === 'remove') cart = cart.filter(i=>i.id!==item.id);
       persistCart(); updateCartCount(); renderCart();
     });
+    if (mobileCategoryToggle) mobileCategoryToggle.addEventListener('click', openMobileCategoryDrawer);
+    if (mobileCategoryDrawer) document.getElementById('closeMobileCategory').addEventListener('click', closeMobileCategoryDrawer);
     cartOpenBtn.addEventListener('click', openCart);
     document.querySelectorAll('[data-cart-open]').forEach((trigger) => {
       trigger.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
