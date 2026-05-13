@@ -286,19 +286,11 @@
     .cta.ghost{background:#111b2c;}
     .hero-showcase{position:relative;display:flex;align-items:center;justify-content:center;min-height:370px;padding:1rem 1.05rem;border-radius:1rem;overflow:hidden;background:radial-gradient(circle at 68% 12%, rgba(245,194,0,.3) 0, rgba(245,194,0,.07) 26%, rgba(10,15,25,.95) 56%), linear-gradient(165deg, #141c2b 0%, #0b101b 58%, #090d16 100%);border:1px solid rgba(255,255,255,.09);box-shadow:0 22px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);isolation:isolate;}
     .hero-showcase::after{content:"";position:absolute;left:8%;right:8%;bottom:14px;height:58px;border-radius:50%;background:radial-gradient(circle, rgba(0,0,0,.56) 0%, rgba(0,0,0,0) 72%);filter:blur(7px);z-index:0;}
-    .hero-stage{position:absolute;inset:0;z-index:1;pointer-events:none;}
+    .hero-photo{position:relative;z-index:2;width:100%;height:100%;min-height:340px;object-fit:cover;border-radius:.8rem;filter:drop-shadow(0 24px 34px rgba(0,0,0,.54));}
     .badge{font-weight:700;}
     .badge small{display:block;color:var(--muted);font-weight:500;}
     .category-chip{grid-template-columns:72px 1fr;padding:.9rem;background:linear-gradient(160deg,#131b2a,#0f1624);}
     .category-chip img{width:72px;height:72px;border-radius:.8rem;object-fit:cover;}
-
-
-
-    .hero-item{position:absolute;z-index:2;max-width:58%;height:auto;object-fit:contain;filter:drop-shadow(0 24px 34px rgba(0,0,0,.54));}
-    .hero-phone{left:4%;bottom:5%;width:50%;transform:rotate(-9deg);}
-    .hero-headphones{right:1%;bottom:9%;width:50%;transform:rotate(6deg);}
-    .hero-watch{left:34%;top:7%;width:29%;transform:rotate(-5deg);}
-    .hero-earbuds{right:26%;top:16%;width:24%;transform:rotate(8deg);}
     .featured-card{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:1rem;border:1px solid var(--line);background:linear-gradient(145deg,rgba(17,24,36,.95),rgba(12,17,28,.95));border-radius:1rem;padding:1rem;}
     .featured-card img{width:100%;height:100%;max-height:320px;object-fit:cover;border-radius:.85rem;border:1px solid rgba(255,255,255,.08);background:#111a2b;}
     .testimonials-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;}
@@ -348,11 +340,7 @@
       .cart-trigger { display:none; }
       .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 1.25rem; }
       .hero-showcase{min-height:290px;padding:.85rem;}
-      .hero-item{max-width:64%;}
-      .hero-phone{left:1%;bottom:7%;width:56%;}
-      .hero-headphones{right:-4%;bottom:12%;width:58%;}
-      .hero-watch{left:34%;top:6%;width:34%;}
-      .hero-earbuds{right:29%;top:18%;width:31%;}
+      .hero-photo{min-height:260px;}
       .featured-card{grid-template-columns:1fr;}
       .testimonials-grid{grid-template-columns:1fr;}
       .newsletter-panel{grid-template-columns:1fr;}
@@ -440,30 +428,7 @@
           </div>
         </div>
         <div class="hero-card hero-showcase" aria-label="Premium electronics showcase">
-          <svg class="hero-stage" viewBox="0 0 800 500" aria-hidden="true">
-            <defs>
-              <radialGradient id="heroGlow" cx="70%" cy="18%" r="68%">
-                <stop offset="0%" stop-color="#ffd55f" stop-opacity="0.42" />
-                <stop offset="46%" stop-color="#ffd55f" stop-opacity="0.10" />
-                <stop offset="100%" stop-color="#0a0f19" stop-opacity="0" />
-              </radialGradient>
-              <linearGradient id="stageMetal" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#27334a" stop-opacity="0.68"/>
-                <stop offset="1" stop-color="#111827" stop-opacity="0.18"/>
-              </linearGradient>
-            </defs>
-            <rect x="0" y="0" width="800" height="500" fill="url(#heroGlow)" />
-            <ellipse cx="420" cy="400" rx="270" ry="56" fill="#020305" fill-opacity="0.84" />
-            <ellipse cx="420" cy="387" rx="226" ry="40" fill="url(#stageMetal)" />
-            <path d="M166 374 L348 342 L630 354 L452 392 Z" fill="#1a2333" fill-opacity="0.86" />
-            <path d="M210 338 L356 311 L581 319 L442 346 Z" fill="#2b3852" fill-opacity="0.4" />
-            <circle cx="616" cy="154" r="96" fill="#f5c200" fill-opacity="0.12" />
-            <circle cx="242" cy="106" r="70" fill="#9cb6ff" fill-opacity="0.09" />
-          </svg>
-          <img class="hero-item hero-phone" src="images/products/samsung-s24-ultra.svg" alt="Samsung Galaxy smartphone showcase">
-          <img class="hero-item hero-headphones" src="images/products/sony-headphones.svg" alt="Sony premium headphones showcase">
-          <img class="hero-item hero-watch" src="images/products/apple-watch.svg" alt="Apple smartwatch showcase">
-          <img class="hero-item hero-earbuds" src="images/products/airpods-pro.svg" alt="Apple earbuds showcase">
+          <img class="hero-photo" src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=80" alt="Premium electronics workspace with laptop and devices">
         </div>
       </div>
     </section>
