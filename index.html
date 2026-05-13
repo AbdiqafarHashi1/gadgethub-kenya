@@ -188,9 +188,23 @@
     .stock.out { color:#ff9f9f; font-weight:700; font-size:.82rem; }
     .delivery { color:#9ed2ff; font-size:.82rem; }
     .spec-list { margin:.2rem 0 0; padding-left:1rem; color:#d0d6e4; font-size:.81rem; line-height:1.35; min-height:3.35rem; }
-    .actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.42rem; margin-top:auto; padding-top:.55rem; }
-    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.56rem; min-height:38px; padding:.52rem .42rem; font-size:.73rem; line-height:1.15; cursor:pointer; font-weight:700; display:grid; place-items:center; text-align:center; }
-    .actions button:hover { border-color: var(--accent); }
+    .actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem; margin-top:auto; padding-top:.65rem; }
+    .actions button { border:1px solid #374055; border-radius:.62rem; min-height:40px; padding:.56rem .5rem; font-size:.76rem; line-height:1.15; cursor:pointer; font-weight:800; display:grid; place-items:center; text-align:center; transition:transform .16s ease, box-shadow .2s ease, border-color .2s ease, filter .2s ease; }
+    .actions button:hover { transform:translateY(-1px); }
+    .actions button[data-action="add"], .actions button[data-featured-action="add"] {
+      border-color:#f3c62f;
+      background:linear-gradient(180deg,#ffd859 0%, #f5c200 64%, #d7a700 100%);
+      color:#151008;
+      box-shadow:0 6px 16px rgba(245,194,0,.28);
+    }
+    .actions button[data-action="add"]:hover, .actions button[data-featured-action="add"]:hover { filter:brightness(1.03); box-shadow:0 10px 18px rgba(245,194,0,.34); }
+    .actions button[data-action="wa"], .actions button[data-featured-action="wa"] {
+      border-color:#32b768;
+      background:linear-gradient(180deg,#32d672 0%, #22c55e 62%, #17994a 100%);
+      color:#062113;
+      box-shadow:0 6px 16px rgba(34,197,94,.24);
+    }
+    .actions button[data-action="wa"]:hover, .actions button[data-featured-action="wa"]:hover { filter:brightness(1.03); box-shadow:0 10px 18px rgba(34,197,94,.3); }
     .cart-count {
       display:inline-grid; place-items:center; min-width:20px; height:20px; border-radius:99px; background:var(--accent); color:#121212; font-size:.72rem; font-weight:800; padding:0 .35rem;
     }
@@ -410,9 +424,8 @@
       .footer-grid{grid-template-columns:1fr;}
       .product-body{padding:.74rem;gap:.4rem;}
       .product-body strong{font-size:.92rem;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-      .actions{grid-template-columns:1fr;gap:.34rem;}
+      .actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;}
       .actions button{font-size:.71rem;padding:.5rem .35rem;min-height:36px;}
-      .actions .details-btn{display:none;}
       .product-card img{aspect-ratio:1 / .86;padding:.25rem;}
       .modal-body img{aspect-ratio:1 / .9;padding:.4rem;}
     }
@@ -719,7 +732,7 @@
       featuredProductCard.innerHTML = `<img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
       <div><strong style="font-size:1.3rem;line-height:1.2;display:block;">${p.name}</strong><div class="meta" style="margin:.35rem 0;">${p.brand} • ${p.category}</div>
       <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div><ul class="spec-list">${p.specs.slice(0,4).map((s)=>`<li>${s}</li>`).join('')}</ul>
-      <div class="actions" style="max-width:460px;"><button data-featured-action="add" data-featured-id="${p.id}">Add to Cart</button><button data-featured-action="details" data-featured-id="${p.id}">View Details</button><button data-featured-action="wa" data-featured-id="${p.id}">WhatsApp</button></div></div>`;
+      <div class="actions" style="max-width:460px;"><button data-featured-action="add" data-featured-id="${p.id}">Add to Cart</button><button data-featured-action="wa" data-featured-id="${p.id}">WhatsApp</button></div></div>`;
     }
     function renderCategories() {
       categoryGrid.innerHTML = categories.map((cat) => `
@@ -740,7 +753,7 @@
         <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div>
         <div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
         <ul class="spec-list">${p.specs.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
-        <div class="actions"><button data-action="add">Add to Cart</button><button class="details-btn" data-action="details">View Details</button><button data-action="wa">WhatsApp</button></div></div></article>`).join('')
+        <div class="actions"><button data-action="add">Add to Cart</button><button data-action="wa">WhatsApp</button></div></div></article>`).join('')
       : `<div class="empty-state"><strong>No products found for "${query || activeCategory}"</strong><p>Try a different product name, brand, or category keyword.</p></div>`;
     }
     const persistCart = () => localStorage.setItem('gadgethub_cart', JSON.stringify(cart));
@@ -821,7 +834,6 @@
       const btn = e.target.closest('[data-featured-action]'); if (!btn) return;
       const id = btn.dataset.featuredId;
       if (btn.dataset.featuredAction === 'add') { addToCart(id); const original = btn.textContent; btn.textContent='Added ✓'; setTimeout(()=>btn.textContent=original,900);}
-      else if (btn.dataset.featuredAction === 'details') openModal(id);
       else if (btn.dataset.featuredAction === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
     });
     productGrid.addEventListener('click', (e) => {
@@ -831,8 +843,7 @@
       if (!btn) { openModal(id); return; }
       if (btn.dataset.action === 'add') {
         addToCart(id); const original = btn.textContent; btn.textContent = 'Added ✓'; setTimeout(() => { btn.textContent = original; }, 900);
-      } else if (btn.dataset.action === 'details') openModal(id);
-      else if (btn.dataset.action === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
+      } else if (btn.dataset.action === 'wa') window.open(productWA(products.find(p=>p.id===id)), '_blank', 'noopener');
     });
     modalContent.addEventListener('click', (e) => {
       const id = e.target.dataset.modalAdd; if (!id) return; addToCart(id);
