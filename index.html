@@ -146,19 +146,24 @@
     .category-chip {
       border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:.95rem; padding:.7rem; color:var(--text);
       display:grid; grid-template-columns:56px 1fr; gap:.7rem; align-items:center; cursor:pointer;
+      transition:border-color .2s ease, background .2s ease, transform .2s ease;
     }
+    .category-chip:hover { border-color:rgba(245,194,0,.45); background:rgba(20,29,45,.95); transform:translateX(2px); }
     .category-chip img { width:56px; height:56px; object-fit:cover; border-radius:.7rem; border:1px solid rgba(255,255,255,.08);}
     .category-chip small { color:var(--muted); display:block; }
     .category-chip.active { border-color:var(--accent); box-shadow:0 0 0 1px rgba(245,194,0,.24) inset; }
     .search-wrap { margin:.7rem 0 1rem; }
     .search-wrap input {
-      width:100%; border:1px solid var(--line); background:#0d1320; color:var(--text); border-radius:.8rem; padding:.8rem .95rem;
+      width:100%; border:1px solid var(--line); background:#0d1320; color:var(--text); border-radius:.8rem; padding:.84rem .95rem;
+      transition:border-color .2s ease, box-shadow .2s ease;
     }
+    .search-wrap input::placeholder { color:#8390a7; }
+    .search-wrap input:focus { outline:none; border-color:rgba(245,194,0,.7); box-shadow:0 0 0 3px rgba(245,194,0,.16); }
     .products-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:.8rem; }
     .product-card { border:1px solid var(--line); background:rgba(18,25,38,.85); border-radius:1rem; overflow:hidden; display:flex; flex-direction:column; transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease; }
     .product-card:hover { transform:translateY(-3px); border-color:rgba(245,194,0,.46); box-shadow:0 18px 30px rgba(0,0,0,.28), 0 0 0 1px rgba(245,194,0,.12) inset; }
-    .product-card img { width:100%; aspect-ratio: 4/3; object-fit:cover; background:#0a0f19; padding:.3rem; border-bottom:1px solid rgba(255,255,255,.06); }
-    .product-body { padding:.85rem; display:grid; gap:.48rem; }
+    .product-card img { width:100%; aspect-ratio: 4/3; object-fit:cover; background:radial-gradient(circle at 20% 20%, #1f2e4b, #0a0f19); padding:.35rem; border-bottom:1px solid rgba(255,255,255,.06); }
+    .product-body { padding:.9rem; display:grid; gap:.5rem; }
     .meta { color:var(--muted); font-size:.85rem; }
     .price { font-size:1.1rem; font-weight:800; color:var(--accent); }
     .rating { font-size:.85rem; color:#ffd44f; }
@@ -167,7 +172,7 @@
     .delivery { color:#9ed2ff; font-size:.82rem; }
     .spec-list { margin:0; padding-left:1rem; color:#d0d6e4; font-size:.82rem; }
     .actions { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; margin-top:.25rem; }
-    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.5rem; padding:.45rem; font-size:.72rem; cursor:pointer; }
+    .actions button { border:1px solid #374055; background:#1a2334; color:#d8deeb; border-radius:.5rem; padding:.5rem .35rem; font-size:.72rem; cursor:pointer; font-weight:600; }
     .actions button:hover { border-color: var(--accent); }
     .cart-count {
       display:inline-grid; place-items:center; min-width:20px; height:20px; border-radius:99px; background:var(--accent); color:#121212; font-size:.72rem; font-weight:800; padding:0 .35rem;
@@ -182,8 +187,8 @@
     .modal-head { position:sticky; top:0; background:#0e1522; z-index:2; }
     .modal-head, .drawer-head { display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid var(--line);}
     .close-btn { background:#1a2334; color:var(--text); border:1px solid #354055; border-radius:.55rem; padding:.35rem .55rem; cursor:pointer; }
-    .modal-body { padding:1rem; display:grid; gap:1rem; grid-template-columns:1fr 1.2fr; }
-    .modal-body img { width:100%; border-radius:.8rem; border:1px solid var(--line); }
+    .modal-body { padding:1rem; display:grid; gap:1rem; grid-template-columns:1fr 1.2fr; align-items:start; }
+    .modal-body img { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:.8rem; border:1px solid var(--line); background:#0a0f19; }
     .modal-actions { display:flex; gap:.6rem; flex-wrap:wrap; }
     .modal-actions button, .modal-actions a, .checkout-btn { border:1px solid #354055; background:#1a2334; color:var(--text); border-radius:.55rem; padding:.55rem .8rem; font-size:.9rem; cursor:pointer; }
     .checkout-btn { background:var(--ok); color:#032211; font-weight:700; width:100%; margin-top:.7rem; }
@@ -255,7 +260,9 @@
 
     @media (min-width: 1025px) {
       .shop-layout { display:grid; grid-template-columns: 270px minmax(0,1fr); gap:1rem; align-items:start; }
-      #categories { position:sticky; top:92px; margin-top:0; max-height:calc(100vh - 112px); overflow:auto; }
+      #categories { position:sticky; top:92px; margin-top:0; max-height:calc(100vh - 112px); overflow:auto; scrollbar-width:thin; scrollbar-color:#42506c #0b1019; }
+      #categories::-webkit-scrollbar { width:8px; }
+      #categories::-webkit-scrollbar-thumb { background:#3a4762; border-radius:8px; }
       #products { margin-top:0; min-height:520px; }
       .category-grid { grid-template-columns:1fr; gap:.6rem; }
       .category-chip { grid-template-columns:44px 1fr; padding:.58rem .65rem; }
@@ -413,13 +420,15 @@
     const productModal = document.getElementById('productModal');
     const modalContent = document.getElementById('modalContent');
     const cartOpenBtn = document.getElementById('cartOpenBtn');
-    const fallbackThumbs = [
-      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1600086827875-a63b01f1335c?auto=format&fit=crop&w=800&q=80'
-    ];
+    const fallbackThumbs = {
+      general: 'images/categories/accessories.svg',
+      smartphones: 'images/categories/smartphones.svg',
+      laptops: 'images/categories/gaming.svg',
+      tablets: 'images/categories/accessories.svg',
+      watches: 'images/categories/smartwatches.svg',
+      audio: 'images/categories/audio.svg',
+      power: 'images/categories/power-banks.svg'
+    };
     const categories = [
       { name: 'All Products', image: 'images/categories/accessories.svg' }, { name: 'Smartphones', image: 'images/categories/smartphones.svg' },
       { name: 'Laptops', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80' }, { name: 'Tablets', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=500&q=80' },
@@ -429,23 +438,22 @@
       { name: 'Phone Accessories', image: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?auto=format&fit=crop&w=500&q=80' }, { name: 'Smart Home Devices', image: 'https://images.unsplash.com/photo-1558002038-1055e2dae1d7?auto=format&fit=crop&w=500&q=80' },
       { name: 'Cameras & Creator Gear', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80' }
     ];
-    const products = [];
-    const makeProduct = (cat, idx) => ({
-      id: `${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${idx}`,
-      name: `${['Pro','Ultra','Max','Lite'][idx%4]} ${cat.replace('&','').trim()} ${idx+1}`,
-      brand: ['Samsung','Apple','Sony','Anker','JBL','Logitech','Xiaomi','Oraimo'][idx%8],
-      category: cat,
-      price: 4500 + (idx * 3200) + (cat.length * 150),
-      rating: (4 + ((idx%5)*0.1)).toFixed(1),
-      reviews: 40 + idx * 17,
-      stock: idx % 4 === 0 ? 'Low stock' : 'In stock',
-      delivery: idx % 2 === 0 ? 'Same-day Nairobi' : 'Next-day Kenya-wide',
-      specs: [`${64 + idx * 32}GB`, `${12 + idx} Months Warranty`, idx % 2 ? 'USB-C Fast Charge' : 'Bluetooth 5.3'],
-      image: fallbackThumbs[(idx + cat.length) % fallbackThumbs.length],
-      fallback: fallbackThumbs[(idx + cat.length + 1) % fallbackThumbs.length]
-    });
-    categories.filter(c => c.name !== 'All Products').forEach((c) => { for (let i = 0; i < 4; i++) products.push(makeProduct(c.name, i)); });
-    products[0].name = 'Galaxy S24 Ultra'; products[1].name = 'iPhone 15 Pro Max'; products[2].name = 'Xperia 1 VI'; products[3].name = 'Redmi Note 13 Pro';
+    const products = [
+      { id:'s24-ultra-512', name:'Samsung Galaxy S24 Ultra 512GB', brand:'Samsung', category:'Smartphones', price:164999, rating:'4.8', reviews:318, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['512GB Storage','12GB RAM','200MP Pro Camera','24-Month Samsung Warranty'], image:'images/products/samsung-s24-ultra.svg', fallback:fallbackThumbs.smartphones },
+      { id:'iphone15promax-256', name:'Apple iPhone 15 Pro Max 256GB', brand:'Apple', category:'Smartphones', price:189999, rating:'4.9', reviews:274, stock:'Low stock', delivery:'Next-day countrywide delivery', specs:['256GB Storage','A17 Pro Chip','5x Telephoto Zoom','12-Month Apple Warranty'], image:'images/products/iphone-15-pro-max.svg', fallback:fallbackThumbs.smartphones },
+      { id:'redmi-note13pro', name:'Xiaomi Redmi Note 13 Pro 256GB', brand:'Xiaomi', category:'Smartphones', price:45999, rating:'4.6', reviews:193, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['256GB Storage','120Hz AMOLED Display','67W Turbo Charging','12-Month Local Warranty'], image:'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.smartphones },
+      { id:'xperia-1-vi', name:'Sony Xperia 1 VI 256GB', brand:'Sony', category:'Smartphones', price:149999, rating:'4.5', reviews:87, stock:'Pre-order', delivery:'Ships in 48 hours', specs:['256GB Storage','Snapdragon 8 Gen 3','4K OLED Display','12-Month Sony Warranty'], image:'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.smartphones },
+      { id:'macbook-air-m3', name:'Apple MacBook Air M3 13-inch', brand:'Apple', category:'Laptops', price:172000, rating:'4.9', reviews:129, stock:'In stock', delivery:'Next-day insured delivery', specs:['8GB Unified Memory','512GB SSD','Up to 18 Hours Battery','12-Month Apple Warranty'], image:'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.laptops },
+      { id:'hp-spectre-x360', name:'HP Spectre x360 14 OLED', brand:'HP', category:'Laptops', price:188500, rating:'4.6', reviews:76, stock:'Low stock', delivery:'Next-day insured delivery', specs:['Intel Core Ultra 7','16GB RAM','1TB NVMe SSD','24-Month HP Warranty'], image:'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.laptops },
+      { id:'tab-s9-5g', name:'Samsung Galaxy Tab S9 5G', brand:'Samsung', category:'Tablets', price:116999, rating:'4.7', reviews:91, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['12GB RAM','256GB Storage','S Pen Included','24-Month Samsung Warranty'], image:'https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.tablets },
+      { id:'ipad-air-m2', name:'Apple iPad Air M2 11-inch', brand:'Apple', category:'Tablets', price:102999, rating:'4.8', reviews:114, stock:'In stock', delivery:'Next-day countrywide delivery', specs:['M2 Chip','256GB Storage','Liquid Retina Display','12-Month Apple Warranty'], image:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.tablets },
+      { id:'watch-series-9', name:'Apple Watch Series 9 GPS 45mm', brand:'Apple', category:'Smart Watches', price:61999, rating:'4.8', reviews:142, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['Always-On Retina Display','Heart Rate + ECG','Water Resistant 50m','12-Month Apple Warranty'], image:'images/products/apple-watch.svg', fallback:fallbackThumbs.watches },
+      { id:'galaxy-watch-6', name:'Samsung Galaxy Watch6 Classic 47mm', brand:'Samsung', category:'Smart Watches', price:47999, rating:'4.6', reviews:98, stock:'Low stock', delivery:'Next-day countrywide delivery', specs:['Sapphire Crystal','Sleep Coaching','Bluetooth + Wi‑Fi','24-Month Samsung Warranty'], image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.watches },
+      { id:'sony-wh1000xm5', name:'Sony WH-1000XM5 Noise Cancelling Headphones', brand:'Sony', category:'Headphones & Earbuds', price:46999, rating:'4.9', reviews:226, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['30-Hour Battery','Industry-leading ANC','Multipoint Bluetooth','12-Month Sony Warranty'], image:'images/products/sony-headphones.svg', fallback:fallbackThumbs.audio },
+      { id:'airpods-pro-usbc', name:'Apple AirPods Pro (USB‑C)', brand:'Apple', category:'Headphones & Earbuds', price:37999, rating:'4.8', reviews:301, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['Active Noise Cancellation','Adaptive Audio','MagSafe Charging Case','12-Month Apple Warranty'], image:'images/products/airpods-pro.svg', fallback:fallbackThumbs.audio },
+      { id:'jbl-charge-5', name:'JBL Charge 5 Portable Speaker', brand:'JBL', category:'Speakers', price:24999, rating:'4.7', reviews:158, stock:'In stock', delivery:'Next-day countrywide delivery', specs:['20H Playtime','IP67 Waterproof','Bluetooth 5.1','12-Month JBL Warranty'], image:'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80', fallback:fallbackThumbs.audio },
+      { id:'anker-737-pb', name:'Anker 737 Power Bank 24,000mAh', brand:'Anker', category:'Power Banks', price:22999, rating:'4.7', reviews:133, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['24,000mAh Capacity','140W Two-Way Fast Charge','Digital Power Display','18-Month Anker Warranty'], image:'images/products/anker-powerbank.svg', fallback:fallbackThumbs.power }
+    ];
     let activeCategory = 'All Products';
     let cart = JSON.parse(localStorage.getItem('gadgethub_cart') || '[]');
 
@@ -454,7 +462,7 @@
     function renderCategories() {
       categoryGrid.innerHTML = categories.map((cat) => `
         <button class="category-chip ${activeCategory===cat.name?'active':''}" data-category="${cat.name}" aria-label="${cat.name}">
-          <img src="${cat.image}" alt="${cat.name}" onerror="this.onerror=null;this.src='${fallbackThumbs[0]}'">
+          <img src="${cat.image}" alt="${cat.name}" onerror="this.onerror=null;this.src='${fallbackThumbs.general}'">
           <div><strong>${cat.name}</strong><small>${countByCategory(cat.name)} products</small></div>
         </button>`).join('');
       categorySummary.textContent = `${categories.length - 1} electronics categories available`;
@@ -464,13 +472,13 @@
       const filtered = products.filter((p) => (activeCategory === 'All Products' || p.category === activeCategory) && `${p.name} ${p.brand} ${p.category} ${p.specs.join(' ')}`.toLowerCase().includes(query));
       resultsSummary.textContent = `${filtered.length} product${filtered.length===1?'':'s'} shown in ${activeCategory}`;
       productGrid.innerHTML = filtered.length ? filtered.map((p) => `<article class="product-card" data-product-id="${p.id}">
-        <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='${p.fallback}'">
         <div class="product-body"><strong>${p.name}</strong><div class="meta">${p.brand} • ${p.category}</div>
         <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div>
         <div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
         <ul class="spec-list">${p.specs.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul>
         <div class="actions"><button data-action="add">Add to Cart</button><button data-action="details">View Details</button><button data-action="wa">WhatsApp</button></div></div></article>`).join('')
-      : `<div class="empty-state"><strong>No products found</strong><p>Try another search term or switch category.</p></div>`;
+      : `<div class="empty-state"><strong>No products found for "${query || activeCategory}"</strong><p>Try a different product name, brand, or category keyword.</p></div>`;
     }
     const persistCart = () => localStorage.setItem('gadgethub_cart', JSON.stringify(cart));
     const updateCartCount = () => {
@@ -509,7 +517,7 @@
     }
     function openModal(productId) {
       const p = products.find((x) => x.id === productId); if (!p) return;
-      modalContent.innerHTML = `<img src="${p.image}" alt="${p.name}"><div><h3 style="margin:.1rem 0;">${p.name}</h3><div class="meta">${p.brand} • ${p.category}</div>
+      modalContent.innerHTML = `<img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='${p.fallback}'"><div><h3 style="margin:.1rem 0;">${p.name}</h3><div class="meta">${p.brand} • ${p.category}</div>
       <div class="price">${formatKES(p.price)}</div><div class="rating">★ ${p.rating} (${p.reviews} reviews)</div><div class="stock ${p.stock==='In stock'?'in':'out'}">${p.stock}</div><div class="delivery">${p.delivery}</div>
       <ul class="spec-list">${p.specs.map(s=>`<li>${s}</li>`).join('')}</ul><p class="meta">Warranty and delivery support available. Same-day dispatch options apply where available.</p>
       <div class="modal-actions"><button data-modal-add="${p.id}">Add to Cart</button><a href="${productWA(p)}" target="_blank" rel="noopener">Chat on WhatsApp</a></div></div>`;
