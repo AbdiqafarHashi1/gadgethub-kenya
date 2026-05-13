@@ -269,8 +269,9 @@
     .cta{padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--line);font-weight:700;}
     .cta.primary{background:var(--accent);color:#141414;border-color:var(--accent);}
     .cta.ghost{background:#111b2c;}
-    .hero-collage{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;background:radial-gradient(circle at 45% 35%, rgba(245,194,0,.17), transparent 55%), rgba(18, 25, 38, .9);}
-    .hero-collage img{width:100%;height:145px;object-fit:contain;background:#0a101a;border:1px solid rgba(255,255,255,.09);border-radius:.8rem;padding:.4rem;}
+    .hero-showcase{position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:360px;padding:1.1rem;border-radius:1rem;overflow:hidden;background:radial-gradient(circle at 62% 42%, rgba(245,194,0,.24), rgba(245,194,0,.06) 34%, rgba(8,12,20,.96) 72%);border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 36px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06);} 
+    .hero-showcase::after{content:"";position:absolute;left:8%;right:8%;bottom:16px;height:52px;border-radius:50%;background:radial-gradient(circle, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 70%);filter:blur(6px);} 
+    .hero-showcase img{position:relative;z-index:1;width:min(100%, 600px);height:auto;display:block;filter:drop-shadow(0 14px 24px rgba(0,0,0,.5));}
     .badge{font-weight:700;}
     .badge small{display:block;color:var(--muted);font-weight:500;}
     .category-chip{grid-template-columns:72px 1fr;padding:.9rem;background:linear-gradient(160deg,#131b2a,#0f1624);}
@@ -306,6 +307,7 @@
       .logo small{display:none;}
       .cart-trigger { display:none; }
       .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 1.25rem; }
+      .hero-showcase{min-height:280px;padding:.8rem;}
       .badges { grid-template-columns: 1fr 1fr; }
       .mobile-nav { display: block; }
     }
@@ -372,11 +374,8 @@
             <a class="cta ghost" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20want%20help%20choosing%20a%20gadget." target="_blank" rel="noopener">Chat on WhatsApp</a>
           </div>
         </div>
-        <div class="hero-card hero-collage">
-          <img src="images/products/iphone-15-pro-max.svg" alt="Premium smartphone">
-          <img src="images/products/sony-headphones.svg" alt="Noise-cancelling headphones">
-          <img src="images/products/apple-watch.svg" alt="Smartwatch">
-          <img src="images/products/anker-powerbank.svg" alt="Power accessories">
+        <div class="hero-card hero-showcase">
+          <img src="images/hero/gadgethub-hero.svg" alt="Premium floating electronics showcase with smartphone, headphones, and smartwatch">
         </div>
       </div>
     </section>
@@ -683,7 +682,9 @@
       persistCart(); updateCartCount(); renderCart();
     });
     cartOpenBtn.addEventListener('click', openCart);
-    document.querySelector('[data-cart-open]').addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    document.querySelectorAll('[data-cart-open]').forEach((trigger) => {
+      trigger.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    });
     document.querySelector('[data-close-cart]').addEventListener('click', closeLayers);
     document.querySelector('[data-close-modal]').addEventListener('click', closeLayers);
     overlay.addEventListener('click', closeLayers);
