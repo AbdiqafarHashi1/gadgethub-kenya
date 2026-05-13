@@ -257,6 +257,25 @@
     }
 
     footer { margin: 1.5rem 0 6rem; color: var(--muted); font-size: .9rem; text-align: center; }
+    .logo { display:grid; gap:.05rem; line-height:1; }
+    .logo-main{font-weight:900;font-size:1.6rem;}
+    .logo small{font-size:.58rem;letter-spacing:.18em;color:var(--muted);}
+    .header-search{flex:1;max-width:420px;}
+    .header-search input{width:100%;border:1px solid #2f384c;background:#0d1320;color:var(--text);border-radius:.7rem;padding:.62rem .8rem;}
+    .wa-number{font-size:.86rem;color:#8df3ae;font-weight:700;}
+    .icon-btn{display:none;border:1px solid var(--line);background:var(--bg-soft);color:var(--text);border-radius:.55rem;padding:.42rem .6rem;}
+    .mobile-only{display:none;}
+    .hero-cta{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap;}
+    .cta{padding:.68rem 1rem;border-radius:.65rem;border:1px solid var(--line);font-weight:700;}
+    .cta.primary{background:var(--accent);color:#141414;border-color:var(--accent);}
+    .cta.ghost{background:#111b2c;}
+    .hero-collage{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;background:radial-gradient(circle at 45% 35%, rgba(245,194,0,.17), transparent 55%), rgba(18, 25, 38, .9);}
+    .hero-collage img{width:100%;height:145px;object-fit:contain;background:#0a101a;border:1px solid rgba(255,255,255,.09);border-radius:.8rem;padding:.4rem;}
+    .badge{font-weight:700;}
+    .badge small{display:block;color:var(--muted);font-weight:500;}
+    .category-chip{grid-template-columns:72px 1fr;padding:.9rem;background:linear-gradient(160deg,#131b2a,#0f1624);}
+    .category-chip img{width:72px;height:72px;border-radius:.8rem;object-fit:cover;}
+
 
     @media (min-width: 1025px) {
       .shop-layout { display:grid; grid-template-columns: 270px minmax(0,1fr); gap:1rem; align-items:start; }
@@ -279,7 +298,12 @@
 
     @media (max-width: 900px) {
       .desktop-nav { display: none; }
+      .header-search { display:none; }
+      .wa-number{display:none;}
+      .icon-btn{display:inline-flex;}
+      .mobile-only{display:inline-flex;}
       .menu-btn { display: inline-flex; }
+      .logo small{display:none;}
       .cart-trigger { display:none; }
       .hero-grid { grid-template-columns: 1fr; min-height: auto; padding: 1.25rem; }
       .badges { grid-template-columns: 1fr 1fr; }
@@ -309,25 +333,31 @@
 
   <header class="site-header">
     <div class="container header-row">
-      <a class="logo" href="#hero">Gadget<span>Hub</span> Kenya</a>
+      <a class="logo" href="#hero"><span class="logo-main">Gadget<span>Hub</span></span><small>KENYA · PREMIUM ELECTRONICS</small></a>
       <nav class="desktop-nav" aria-label="Primary">
+        <a href="#hero">Home</a>
+        <a href="#products">Shop</a>
         <a href="#categories">Categories</a>
-        <a href="#products">Products</a>
-        <a href="#featured">Featured</a>
-        <a href="#testimonials">Reviews</a>
-        <a href="#newsletter">Newsletter</a>
+        <a href="#newsletter">Deals</a>
+        <a href="#featured">About Us</a>
+        <a href="#footer-placeholder">Contact</a>
       </nav>
+      <div class="header-search"><input id="desktopSearch" type="search" placeholder="Search for products, brands..." aria-label="Search products"></div>
       <div class="header-actions">
+        <a class="wa-number" href="https://wa.me/254700123456" target="_blank" rel="noopener">WhatsApp: 0700 123 456</a>
+        <button class="icon-btn" aria-label="Search" data-search-focus>⌕</button>
         <button class="cart-trigger" id="cartOpenBtn" aria-label="Open cart">🛒 <span id="cartCount" class="cart-count">0</span><span class="cart-meta"><span class="cart-label">Your cart</span><span id="cartSubtotalPreview" class="cart-subtotal-preview">KSh 0</span></span></button>
-        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰ Menu</button>
+        <button class="icon-btn mobile-only" aria-label="Open cart" data-cart-open>🛒</button>
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">☰</button>
       </div>
     </div>
     <div class="container mobile-menu" id="mobileMenu">
+      <a href="#hero">Home</a>
+      <a href="#products">Shop</a>
       <a href="#categories">Categories</a>
-      <a href="#products">Products</a>
-      <a href="#featured">Featured Product</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#newsletter">Newsletter</a>
+      <a href="#newsletter">Deals</a>
+      <a href="#featured">About Us</a>
+      <a href="#footer-placeholder">Contact</a>
     </div>
   </header>
 
@@ -335,22 +365,28 @@
     <section class="hero" id="hero">
       <div class="hero-grid">
         <div>
-          <h1>Premium Gadgets.<br />Trusted Prices.<br /><span>Fast Nairobi Delivery.</span></h1>
-          <p>Phase 1 storefront shell is now live: clean structure, responsive layout, and reliable navigation for desktop and mobile.</p>
+          <h1>Latest Gadgets.<br />Best Prices.<br /><span>Fast Nairobi Delivery.</span></h1>
+          <p>Premium phones, laptops, audio, accessories, and smart devices delivered across Nairobi.</p>
+          <div class="hero-cta">
+            <a class="cta primary" href="#products">Shop Now</a>
+            <a class="cta ghost" href="https://wa.me/254700123456?text=Hi%20GadgetHub%20Kenya%2C%20I%20want%20help%20choosing%20a%20gadget." target="_blank" rel="noopener">Chat on WhatsApp</a>
+          </div>
         </div>
-        <div class="hero-card">
-          <strong>GadgetHub Kenya</strong>
-          <p style="margin:.45rem 0 0; color: var(--muted);">Dark-tech premium UI foundation, ready for phased feature buildout.</p>
+        <div class="hero-card hero-collage">
+          <img src="images/products/iphone-15-pro-max.svg" alt="Premium smartphone">
+          <img src="images/products/sony-headphones.svg" alt="Noise-cancelling headphones">
+          <img src="images/products/apple-watch.svg" alt="Smartwatch">
+          <img src="images/products/anker-powerbank.svg" alt="Power accessories">
         </div>
       </div>
     </section>
 
     <section class="badges" aria-label="Trust badges">
-      <div class="badge">🚚 Same-Day Nairobi Delivery</div>
-      <div class="badge">🛡️ Original Products</div>
-      <div class="badge">💳 M-Pesa Accepted</div>
-      <div class="badge">↩️ Easy Returns</div>
-      <div class="badge">✅ Warranty Support</div>
+      <div class="badge">🚚 Same-Day Nairobi Delivery<small>Within Nairobi</small></div>
+      <div class="badge">🛡️ Original Products<small>100% Authentic</small></div>
+      <div class="badge">💳 Secure Payments<small>M-Pesa, Card, PayPal</small></div>
+      <div class="badge">↩️ Easy Returns<small>Hassle-free support</small></div>
+      <div class="badge">✅ Warranty Support<small>Official product cover</small></div>
     </section>
 
     <div class="shop-layout">
@@ -406,6 +442,7 @@
     const categoryGrid = document.getElementById('categoryGrid');
     const productGrid = document.getElementById('productGrid');
     const searchInput = document.getElementById('searchInput');
+    const desktopSearch = document.getElementById('desktopSearch');
     const resultsSummary = document.getElementById('resultsSummary');
     const categorySummary = document.getElementById('categorySummary');
     const overlay = document.getElementById('overlay');
@@ -620,6 +657,11 @@
       renderProducts();
     });
     searchInput.addEventListener('input', renderProducts);
+    if (desktopSearch) {
+      desktopSearch.addEventListener('input', () => { searchInput.value = desktopSearch.value; renderProducts(); });
+      searchInput.addEventListener('input', () => { desktopSearch.value = searchInput.value; });
+    }
+    document.querySelectorAll('[data-search-focus]').forEach((btn) => btn.addEventListener('click', () => { searchInput.scrollIntoView({behavior:'smooth', block:'center'}); searchInput.focus(); }));
     productGrid.addEventListener('click', (e) => {
       const card = e.target.closest('[data-product-id]'); if (!card) return;
       const id = card.dataset.productId;
