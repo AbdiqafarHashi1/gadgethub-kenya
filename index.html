@@ -421,13 +421,13 @@
     const modalContent = document.getElementById('modalContent');
     const cartOpenBtn = document.getElementById('cartOpenBtn');
     const fallbackThumbs = {
-      general: 'images/categories/accessories.svg',
-      smartphones: 'images/categories/smartphones.svg',
-      laptops: 'images/categories/gaming.svg',
-      tablets: 'images/categories/accessories.svg',
-      watches: 'images/categories/smartwatches.svg',
-      audio: 'images/categories/audio.svg',
-      power: 'images/categories/power-banks.svg'
+      general: 'https://images.unsplash.com/photo-1586105251261-72a756497a12?auto=format&fit=crop&w=800&q=80',
+      smartphones: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80',
+      laptops: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80',
+      tablets: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80',
+      watches: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
+      audio: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
+      power: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80'
     };
     const categories = [
       { name: 'All Products', image: 'images/categories/accessories.svg' }, { name: 'Smartphones', image: 'images/categories/smartphones.svg' },
@@ -500,39 +500,28 @@
       { id:'ulanzi-ring-light', name:'Ulanzi 10-inch Ring Light Kit', brand:'Ulanzi', category:'Cameras & Creator Gear', price:6999, rating:'4.5', reviews:68, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['Adjustable Brightness','Bi-color Temperature','Tripod Included','12-Month Warranty'], image:fallbackThumbs.general, fallback:fallbackThumbs.general }
     ];
 
-    const svgDataUri = (svg) => `data:image/svg+xml;utf8,${encodeURIComponent(svg.replace(/\s+/g, ' ').trim())}`;
-    const hashCode = (str) => str.split('').reduce((acc, ch) => ((acc * 31) + ch.charCodeAt(0)) >>> 0, 7);
-    function makeFallbackImage(product) {
-      const initials = product.name.split(' ').filter(Boolean).slice(0,2).map((w)=>w[0]).join('').toUpperCase();
-      const label = product.category.replace(/&/g,'and');
-      return svgDataUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17233a"/><stop offset="1" stop-color="#0b1221"/></linearGradient></defs><rect width="640" height="480" rx="26" fill="url(#g)"/><text x="320" y="230" text-anchor="middle" fill="#f5c200" font-family="Inter,Arial" font-size="88" font-weight="800">${initials}</text><text x="320" y="292" text-anchor="middle" fill="#c8d2e6" font-family="Inter,Arial" font-size="28">${label}</text></svg>`);
-    }
-    function buildProductImage(product) {
-      const seed = hashCode(`${product.id}-${product.brand}`);
-      const hue = seed % 360;
-      const v1 = seed % 5;
-      const v2 = (seed >> 3) % 5;
-      const bg = `<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="hsl(${hue} 45% 20%)"/><stop offset="1" stop-color="#0a1120"/></linearGradient><linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="hsl(${(hue+30)%360} 70% 65%)"/><stop offset="1" stop-color="hsl(${(hue+140)%360} 70% 55%)"/></linearGradient></defs><rect width="640" height="480" rx="26" fill="url(#bg)"/>`;
-      const c = product.category;
-      let art = '';
-      if (c==='Smartphones') art = `<rect x="210" y="48" width="220" height="384" rx="36" fill="#111827" stroke="#74819b"/><rect x="228" y="76" width="184" height="326" rx="24" fill="url(#glow)"/><circle cx="260" cy="118" r="${14+v1*2}" fill="#0b0f18" stroke="#97a3bb"/><circle cx="302" cy="118" r="${10+v2}" fill="#0b0f18" stroke="#97a3bb"/><circle cx="344" cy="118" r="8" fill="#0b0f18" stroke="#97a3bb"/>`;
-      else if (c==='Laptops') art = `<rect x="126" y="86" width="388" height="230" rx="16" fill="#0f172a" stroke="#7b879f"/><rect x="144" y="104" width="352" height="194" rx="10" fill="url(#glow)"/><path d="M88 332h464l-42 72H130z" fill="#c4cbd9"/><rect x="274" y="350" width="92" height="10" rx="4" fill="#7f8898"/>`;
-      else if (c==='Tablets') art = `<rect x="124" y="66" width="392" height="312" rx="24" fill="#111827" stroke="#7a869f"/><rect x="146" y="88" width="348" height="268" rx="18" fill="url(#glow)"/><rect x="512" y="140" width="14" height="170" rx="7" fill="#d8dee9" transform="rotate(${8+v1} 519 225)"/>`;
-      else if (c==='Smart Watches') art = `<rect x="274" y="38" width="92" height="404" rx="38" fill="#202635"/><rect x="204" y="124" width="232" height="232" rx="56" fill="#0f172a" stroke="#94a0b7"/><rect x="228" y="148" width="184" height="184" rx="40" fill="url(#glow)"/>`;
-      else if (c==='Headphones & Earbuds') art = `<path d="M210 250a110 110 0 0 1 220 0" fill="none" stroke="#d7dde9" stroke-width="22"/><rect x="178" y="250" width="56" height="110" rx="26" fill="#0f172a"/><rect x="406" y="250" width="56" height="110" rx="26" fill="#0f172a"/><ellipse cx="320" cy="372" rx="76" ry="46" fill="url(#glow)"/>`;
-      else if (c==='Speakers') art = `<rect x="214" y="80" width="212" height="320" rx="34" fill="#111827" stroke="#8f9ab0"/><circle cx="320" cy="186" r="44" fill="#1f2937" stroke="#6f7b92"/><circle cx="320" cy="302" r="66" fill="url(#glow)" opacity=".82"/>`;
-      else if (c==='Power Banks') art = `<rect x="172" y="146" width="296" height="188" rx="24" fill="#111827" stroke="#8c98ad"/><rect x="208" y="182" width="98" height="42" rx="8" fill="url(#glow)"/><rect x="388" y="208" width="22" height="12" rx="2" fill="#d4d9e5"/><rect x="416" y="208" width="22" height="12" rx="2" fill="#d4d9e5"/>`;
-      else if (c==='Chargers & Cables') art = `<rect x="202" y="130" width="136" height="164" rx="18" fill="#e9edf5"/><rect x="244" y="98" width="14" height="34" rx="5" fill="#d5dae5"/><rect x="282" y="98" width="14" height="34" rx="5" fill="#d5dae5"/><path d="M338 238c110 0 136 112 60 146" fill="none" stroke="url(#glow)" stroke-width="16" stroke-linecap="round"/><rect x="387" y="372" width="28" height="18" rx="4" fill="#dae1ee"/>`;
-      else if (c==='Gaming Accessories') art = `<path d="M186 286c8-58 36-98 134-98s126 40 134 98l-44 48H230z" fill="#dce2ee"/><circle cx="266" cy="272" r="14" fill="#111827"/><circle cx="374" cy="272" r="14" fill="#111827"/><rect x="308" y="250" width="24" height="48" rx="6" fill="url(#glow)"/>`;
-      else if (c==='Phone Accessories') art = `<rect x="220" y="72" width="200" height="340" rx="34" fill="none" stroke="#d6deeb" stroke-width="12"/><rect x="246" y="102" width="148" height="280" rx="20" fill="url(#glow)" opacity=".65"/><path d="M130 380h380" stroke="#dae0ec" stroke-width="12" stroke-linecap="round"/>`;
-      else if (c==='Smart Home Devices') art = `<rect x="248" y="118" width="144" height="236" rx="28" fill="#f4f6fb"/><circle cx="320" cy="190" r="24" fill="url(#glow)"/><rect x="292" y="260" width="56" height="10" rx="5" fill="#9da8bd"/><rect x="292" y="282" width="56" height="10" rx="5" fill="#9da8bd"/>`;
-      else art = `<rect x="184" y="130" width="272" height="188" rx="22" fill="#1a2232" stroke="#97a2b8"/><circle cx="320" cy="224" r="52" fill="url(#glow)"/><rect x="448" y="170" width="18" height="108" rx="8" fill="#d8deea"/>`;
-      return svgDataUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">${bg}${art}<text x="320" y="446" text-anchor="middle" fill="#d8e0ef" font-family="Inter,Arial" font-size="23">${product.brand}</text></svg>`);
-    }
+    const categoryPhotoPool = {
+      'Smartphones': ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1605236453806-6ff36851218e?auto=format&fit=crop&w=900&q=80'],
+      'Laptops': ['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1484788984921-03950022c9ef?auto=format&fit=crop&w=900&q=80'],
+      'Tablets': ['https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1623126908029-58cb08a2b272?auto=format&fit=crop&w=900&q=80'],
+      'Smart Watches': ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1617043786394-f977fa12eddf?auto=format&fit=crop&w=900&q=80'],
+      'Headphones & Earbuds': ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=900&q=80'],
+      'Speakers': ['https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80'],
+      'Power Banks': ['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1625758469062-9f0d11f05f4b?auto=format&fit=crop&w=900&q=80'],
+      'Chargers & Cables': ['https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585338447937-7082f8fc763d?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1618577608401-5a2f9a4f8c52?auto=format&fit=crop&w=900&q=80'],
+      'Gaming Accessories': ['https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=900&q=80'],
+      'Phone Accessories': ['https://images.unsplash.com/photo-1603313011108-8f0f8949f8ba?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1564424224827-cd24b8915874?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&w=900&q=80'],
+      'Smart Home Devices': ['https://images.unsplash.com/photo-1558002038-1055e2e28ed1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1558089687-f282ffcbc0d4?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=900&q=80'],
+      'Cameras & Creator Gear': ['https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=900&q=80']
+    };
 
+    const categoryPhotoIndex = {};
     products.forEach((product) => {
-      product.image = buildProductImage(product);
-      product.fallback = makeFallbackImage(product);
+      const idx = categoryPhotoIndex[product.category] || 0;
+      const pool = categoryPhotoPool[product.category] || [fallbackThumbs.general];
+      product.image = pool[idx % pool.length];
+      product.fallback = pool[(idx + 1) % pool.length] || fallbackThumbs.general;
+      categoryPhotoIndex[product.category] = idx + 1;
     });
 
     let activeCategory = 'All Products';
