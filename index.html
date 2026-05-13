@@ -421,22 +421,22 @@
     const modalContent = document.getElementById('modalContent');
     const cartOpenBtn = document.getElementById('cartOpenBtn');
     const fallbackThumbs = {
-      general: 'https://images.unsplash.com/photo-1586105251261-72a756497a12?auto=format&fit=crop&w=800&q=80',
-      smartphones: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80',
-      laptops: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80',
-      tablets: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80',
-      watches: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
-      audio: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
-      power: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80'
+      general: 'https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=900&q=80',
+      smartphones: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80',
+      laptops: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80',
+      tablets: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80',
+      watches: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
+      audio: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80',
+      power: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=900&q=80'
     };
     const categories = [
-      { name: 'All Products', image: 'images/categories/accessories.svg' }, { name: 'Smartphones', image: 'images/categories/smartphones.svg' },
-      { name: 'Laptops', image: 'images/categories/gaming.svg' }, { name: 'Tablets', image: 'images/categories/accessories.svg' },
-      { name: 'Smart Watches', image: 'images/categories/smartwatches.svg' }, { name: 'Headphones & Earbuds', image: 'images/categories/audio.svg' },
-      { name: 'Speakers', image: 'images/categories/audio.svg' }, { name: 'Power Banks', image: 'images/categories/power-banks.svg' },
-      { name: 'Chargers & Cables', image: 'images/categories/power-banks.svg' }, { name: 'Gaming Accessories', image: 'images/categories/gaming.svg' },
-      { name: 'Phone Accessories', image: 'images/categories/accessories.svg' }, { name: 'Smart Home Devices', image: 'images/categories/smartwatches.svg' },
-      { name: 'Cameras & Creator Gear', image: 'images/categories/gaming.svg' }
+      { name: 'All Products', image: fallbackThumbs.general }, { name: 'Smartphones', image: fallbackThumbs.smartphones },
+      { name: 'Laptops', image: fallbackThumbs.laptops }, { name: 'Tablets', image: fallbackThumbs.tablets },
+      { name: 'Smart Watches', image: fallbackThumbs.watches }, { name: 'Headphones & Earbuds', image: fallbackThumbs.audio },
+      { name: 'Speakers', image: fallbackThumbs.audio }, { name: 'Power Banks', image: fallbackThumbs.power },
+      { name: 'Chargers & Cables', image: fallbackThumbs.power }, { name: 'Gaming Accessories', image: fallbackThumbs.laptops },
+      { name: 'Phone Accessories', image: fallbackThumbs.general }, { name: 'Smart Home Devices', image: fallbackThumbs.general },
+      { name: 'Cameras & Creator Gear', image: fallbackThumbs.general }
     ];
     const products = [
       { id:'s24-ultra-512', name:'Samsung Galaxy S24 Ultra 512GB', brand:'Samsung', category:'Smartphones', price:164999, rating:'4.8', reviews:318, stock:'In stock', delivery:'Same-day Nairobi dispatch', specs:['512GB Storage','12GB RAM','200MP Pro Camera','24-Month Samsung Warranty'], image:'images/products/samsung-s24-ultra.svg', fallback:fallbackThumbs.smartphones },
@@ -506,12 +506,12 @@
       'Tablets': ['https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1623126908029-58cb08a2b272?auto=format&fit=crop&w=900&q=80'],
       'Smart Watches': ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1617043786394-f977fa12eddf?auto=format&fit=crop&w=900&q=80'],
       'Headphones & Earbuds': ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=900&q=80'],
-      'Speakers': ['https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80'],
+      'Speakers': ['https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1558537348-c0f8e733989d?auto=format&fit=crop&w=900&q=80'],
       'Power Banks': ['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1625758469062-9f0d11f05f4b?auto=format&fit=crop&w=900&q=80'],
       'Chargers & Cables': ['https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585338447937-7082f8fc763d?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1618577608401-5a2f9a4f8c52?auto=format&fit=crop&w=900&q=80'],
       'Gaming Accessories': ['https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=900&q=80'],
       'Phone Accessories': ['https://images.unsplash.com/photo-1603313011108-8f0f8949f8ba?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1564424224827-cd24b8915874?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&w=900&q=80'],
-      'Smart Home Devices': ['https://images.unsplash.com/photo-1558002038-1055e2e28ed1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1558089687-f282ffcbc0d4?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=900&q=80'],
+      'Smart Home Devices': ['https://images.unsplash.com/photo-1558002038-1055e2e28ed1?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1558089687-f282ffcbc0d4?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=900&q=80'],
       'Cameras & Creator Gear': ['https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=900&q=80']
     };
 
@@ -522,6 +522,11 @@
       product.image = pool[idx % pool.length];
       product.fallback = pool[(idx + 1) % pool.length] || fallbackThumbs.general;
       categoryPhotoIndex[product.category] = idx + 1;
+    });
+    categories.forEach((category) => {
+      if (category.name === 'All Products') return;
+      const pool = categoryPhotoPool[category.name];
+      if (pool?.length) category.image = pool[0];
     });
 
     let activeCategory = 'All Products';
